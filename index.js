@@ -30,6 +30,8 @@ window.onload = function () {
        
         let total = 0;
         total = obj.data.reduce((a, b) => a + b);
+        
+        //obj.data.forEach(el => total += el.value)
         let count = 0;
         strokeW = Math.min(obj.strokeWidth, obj.r);
        
@@ -107,16 +109,24 @@ window.onload = function () {
     };
 
     
-    let values = [ 383, 222, 78, 99 ]
+    // USAGE
+    // include title, text, value
+    let values = [ 383, 222, 178, 99,244 ]
     const pieObj = {
+        // bg-dimensions
         width: 600,
         height: 600,
+        // pie-settings
         x: 160,
         y: 160,
         r: 200,
-        strokeWidth: 70,
+        strokeWidth: 100,
         data: values,
-        colors: []
+        colors: [],
+        // legend
+        legend: 'yes',// 'yes' || 'no'
+        percentage: 'yes',// 'yes' || 'no'
+        color: 'white'
         
     }
     createPie(pieObj)

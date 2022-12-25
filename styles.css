@@ -9,12 +9,9 @@
   }
   #pie {
     position: relative;
-    display:absolute;
     top: 50vh; 
     left: 50vw;
     transform: translate(-50%, -50%);
-    width:600px; 
-    height:600px;  
-    background: rgba(138, 139, 139, 0.1);
-    box-shadow: 13px 15px 51px -4px rgba(0,0,0,0.33);
+    background: #8a8b8b1a;
+    box-shadow: 13px 15px 51px -4px #00000054;
   }
