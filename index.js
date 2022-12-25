@@ -29,15 +29,18 @@ window.onload = function () {
         // legend
        
         let total = 0;
-        total = obj.data.reduce((a, b) => a + b);
+        let vals = [];
+        obj.data.forEach(el => vals.push(el.value))
+        console.log(vals)
+        //total = obj.data.reduce((a, b) => a + b);
         
-        //obj.data.forEach(el => total += el.value)
+        obj.data.forEach(el => total += el.value)
         let sliceCount = 0;
         
         strokeW = Math.min(obj.strokeWidth, obj.r);
        
         class Pie { 
-            data = obj.data;
+            data = vals;
             x = obj.x;
             y = obj.y;
             radius = obj.r;
@@ -57,7 +60,7 @@ window.onload = function () {
             slices.push(
                 {
                     startA: slices[ i - 1 ]?.startA + slices[ i - 1 ]?.sweepA || 0,
-                    sweepA: 360 / total * obj.data[ i ],
+                    sweepA: 360 / total * pie.data[ i ],
                     stroke: randomFill(),
                     opacity: 1,
                 }
@@ -114,7 +117,8 @@ window.onload = function () {
     
     // USAGE
     // include title, text, value
-    let values = [ 383, 222, 178, 99,244 ]
+    //TODO sort descending by value
+    let values = [ { value: 383 }, { value: 83 }, { value: 200 }, { value: 300 }, { value: 78 } ]
     const pieObj = {
         id: 'myId',
         // bg-dimensions
