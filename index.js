@@ -18,7 +18,7 @@ window.onload = function () {
         let randomFill = (`#${(`000000${(Math.floor(Math.random() * 16777215)).toString(16)}`).slice(-6)}`)
         return randomFill;
     };
-   
+    let pieCount = 0;
     function createPie(obj) {
         
         const SVG = "http://www.w3.org/2000/svg";
@@ -32,7 +32,8 @@ window.onload = function () {
         total = obj.data.reduce((a, b) => a + b);
         
         //obj.data.forEach(el => total += el.value)
-        let count = 0;
+        let sliceCount = 0;
+        
         strokeW = Math.min(obj.strokeWidth, obj.r);
        
         class Pie { 
@@ -46,7 +47,7 @@ window.onload = function () {
         
         let pie = new Pie();
         //create this dynamically
-        const container = document.getElementById('pie');
+        const container = document.getElementById('myId');
         container.style.width = obj.width+'px';
         container.style.height = obj.height+'px';
     
@@ -72,7 +73,7 @@ window.onload = function () {
         
         // TODO perhaps replace with the function from editor...
         const newPie = document.createElementNS(SVG, 'svg')
-        newPie.setAttribute('id', 'pieContainer');
+        newPie.setAttribute('id', 'pieContainer'+ pieCount);
         newPie.setAttribute('x', obj.x);
         newPie.setAttribute('y', obj.y);
         newPie.setAttribute('width', '100%');
@@ -82,30 +83,32 @@ window.onload = function () {
         
         slices.forEach(slice => {
         
-        const s = slice.startA;
-        const e = s + slice.sweepA
-        const start = getCoords(cx, cy, _radius, _radius,s );
-        const end = getCoords(cx, cy, _radius, _radius, e);
+            const s = slice.startA;
+            const e = s + slice.sweepA
+            const start = getCoords(cx, cy, _radius, _radius, s);
+            const end = getCoords(cx, cy, _radius, _radius, e);
 
-        const dir = slice.sweepA > 0 ? 1 : 0;
-        const swap = Math.abs(slice.sweepA) % 360 < 180 ? 0 : 1;
-        const close = (Math.abs(Math.ceil(slice.sweepA)) >= 360) ? 'z' : ''
+            const dir = slice.sweepA > 0 ? 1 : 0;
+            const swap = Math.abs(slice.sweepA) % 360 < 180 ? 0 : 1;
+            const close = (Math.abs(Math.ceil(slice.sweepA)) >= 360) ? 'z' : ''
 
-        const d =
-            `M ${start.x} ${start.y} A ${_radius} ${_radius}  0 ${swap} ${dir} ${end.x} ${end.y} ${close}`
+            const d =
+                `M ${start.x} ${start.y} A ${_radius} ${_radius}  0 ${swap} ${dir} ${end.x} ${end.y} ${close}`
             
             const newSlice = document.createElementNS(SVG, 'path');
-            newSlice.setAttribute('id', `slice${count}`);
+            newSlice.setAttribute('id', `slice${sliceCount}`);
             newSlice.setAttribute('stroke', slice.stroke);
             newSlice.setAttribute('stroke-width', pie.strokeWidth);
             newSlice.setAttribute('opacity', 1);
             newSlice.setAttribute('d', d);
             newSlice.setAttribute('fill', 'none');
-            document.getElementById('pieContainer').appendChild(newSlice);
+            document.getElementById('pieContainer' + pieCount).appendChild(newSlice);
 
-            count++;
+            sliceCount++;
+            
             return d;
-        })
+        });
+        pieCount++;
     };
 
     
@@ -113,16 +116,17 @@ window.onload = function () {
     // include title, text, value
     let values = [ 383, 222, 178, 99,244 ]
     const pieObj = {
+        id: 'myId',
         // bg-dimensions
         width: 600,
         height: 600,
         // pie-settings
-        x: 160,
-        y: 160,
+        x: 100,
+        y: 100,
         r: 200,
         strokeWidth: 100,
         data: values,
-        colors: [],
+        colors: [],//if empty or not set: randomFill()
         // legend
         legend: 'yes',// 'yes' || 'no'
         percentage: 'yes',// 'yes' || 'no'
