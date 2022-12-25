@@ -7,11 +7,11 @@ window.onload = function () {
     
     //HELPERS
    function getCoords(cx, cy, rx, ry, deg) {
-        let angRad = (deg - 90) * Math.PI / 180.0;
+        let radians = (deg - 90) * Math.PI / 180.0;
 
         return {
-            x: cx + (rx * Math.cos(angRad)),
-            y: cy + (ry * Math.sin(angRad))
+            x: cx + (rx * Math.cos(radians)),
+            y: cy + (ry * Math.sin(radians))
         };
     };
     function randomFill() {
@@ -19,87 +19,64 @@ window.onload = function () {
         return randomFill;
     };
    
-    function createPie() {
+    function createPie(obj) {
         
         const SVG = "http://www.w3.org/2000/svg";
     
-        
-
-        let data = [ 383 , 222 ,78 ,99  ]
+        //TODO data as obj.value
+        // add params to function
+        // colors
+        // legend
+       
         let total = 0;
-        total = data.reduce((a, b) => a + b);
-        
-        class Pie {
-            constructor (
-                type = 'donut',
-                x = 200,
-                y = 60,
-                radius = 120,
-                strokeWidth= 50,
-                data,
-                
-            ) {
-                this.data = data,
-                this.type = type,
-                this.x = x,
-                this.y = y,
-                this.radius = radius,
-                this.strokeWidth = this.type === 'pie'
-                        ? this.radius
-                        : strokeWidth,
-                this.stroke = randomFill()
-            }
-            
-        }
+        total = obj.data.reduce((a, b) => a + b);
+        let count = 0;
+        strokeW = Math.min(obj.strokeWidth, obj.r);
+       
+        class Pie { 
+            data = obj.data;
+            x = obj.x;
+            y = obj.y;
+            radius = obj.r;
+            strokeWidth = obj.strokeWidth;
+            stroke = randomFill()
+        };
         
         let pie = new Pie();
         //create this dynamically
         const container = document.getElementById('pie');
+        container.style.width = obj.width+'px';
+        container.style.height = obj.height+'px';
     
         let slices = [];
-        
-        
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < obj.data.length; i++) {
         
             slices.push(
                 {
                     startA: slices[ i - 1 ]?.startA + slices[ i - 1 ]?.sweepA || 0,
-                    sweepA: 360 / total * data[ i ],
+                    sweepA: 360 / total * obj.data[ i ],
                     stroke: randomFill(),
                     opacity: 1,
                 }
             
             )
-        
-        
-        }
-        console.log(pie.x)
-    
+        };
        
-        const radius = pie.radius;
-        const x = pie.x;
-        const y = pie.y;
-        const strokeWidth = pie.strokeWidth;
-
-
-      
-        const cx = x + radius;
-        const cy = y + radius;
-      
-
-        const _radius = radius - strokeWidth / 2;
+        const cx = obj.x + obj.r;
+        const cy = obj.y + obj.r;
+       
+        // calculate to move stroke inside chosen radius
+        const _radius = obj.r - strokeW / 2;
         
-        // perhaps replace with the function from editor...
+        // TODO perhaps replace with the function from editor...
         const newPie = document.createElementNS(SVG, 'svg')
         newPie.setAttribute('id', 'pieContainer');
-        newPie.setAttribute('x', x);
-        newPie.setAttribute('y', y);
+        newPie.setAttribute('x', obj.x);
+        newPie.setAttribute('y', obj.y);
         newPie.setAttribute('width', '100%');
         newPie.setAttribute('height', '100%');
-       
         container.appendChild(newPie);
         
-        let count = 0;
         
         slices.forEach(slice => {
         
@@ -129,6 +106,19 @@ window.onload = function () {
         })
     };
 
-    createPie()
+    
+    let values = [ 383, 222, 78, 99 ]
+    const pieObj = {
+        width: 600,
+        height: 600,
+        x: 160,
+        y: 160,
+        r: 200,
+        strokeWidth: 70,
+        data: values,
+        colors: []
+        
+    }
+    createPie(pieObj)
     
 }
