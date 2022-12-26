@@ -50,26 +50,21 @@ window.onload = function () {
     let pieCount = 0;
     function createPie(obj) {
         
+        //TODO 
         
-    
-        //TODO data as obj.value
-        // add params to function
         // colors
         // legend
        
         let total = 0;
         let vals = [];
-        // sort values in descending order and push
-        obj.data.sort((a, b) => b.value - a.value).forEach(el => vals.push(el.value))
-            
-        console.log(vals)
-        //total = obj.data.reduce((a, b) => a + b);
-        
-        obj.data.forEach(el => total += el.value)
         let sliceCount = 0;
         
+        // PREPARE DATA
+        obj.data.sort((a, b) => b.value - a.value)
+            .forEach(el => vals.push(el.value));
+        obj.data.forEach(el => total += el.value)
         strokeW = Math.min(obj.strokeWidth, obj.r);
-        data = vals;
+        data = vals;//???
         
         //TODO create this dynamically
         const container = document.getElementById(obj.id);
@@ -100,59 +95,33 @@ window.onload = function () {
         // calculate to move stroke inside chosen radius
         const _radius = obj.r - strokeW / 2;
         
-        /*
-        const path = {
-                'type': 'path', 'options': {
-                    id: null, class: "slice", d: d, stroke: null, strokeWidth: strokeW, opacity: 1, fill: 'none'
-                }
-            };
-
-            const newSlice = getNode(path.type, path.options);
-            newSlice.setAttribute('stroke', randomFill());
-            newSlice.setAttribute('id', `slice${sliceCount}`)
-            document.getElementById('pieContainer' + pieCount).appendChild(newSlice);
-        */
-        // TODO perhaps replace with the function from editor...
         const newPie = document.createElementNS(SVG, 'svg')
-        newPie.setAttribute('id', 'pieContainer'+ pieCount);
+        newPie.setAttribute('id', 'pieContainer' + pieCount);
+        //TODO ev get own x,y for container
+        // add dropShadow here to remove outer div for responsiveness https://www.w3docs.com/snippets/css/how-to-create-an-svg-drop-shadow.html
         // newPie.setAttribute('x', obj.x);
         // newPie.setAttribute('y', obj.y);
         newPie.setAttribute('width', '100%');
         newPie.setAttribute('height', '100%');
-        newPie.setAttribute('overflow', 'visible');
-        newPie.setAttribute('viewBox', `0 0 ${obj.width} ${obj.height}`);
-        // newPie.setAttribute('xmlns:xlink', "http://www.w3.org/1999/xlink");
-        // newPie.setAttribute('xmlns', "http://www.w3.org/2000/svg")
         newPie.setAttribute('class','pie');
        
         
        
        
         container.appendChild(newPie);
-        const styleDefString = `<defs><style type="text/css"></style></defs>`
-        let styleDef = parser.parseFromString(styleDefString, 'text/html').body.childNodes[ 0 ];
-        
        
-       
-        
         const pie = document.getElementById('pieContainer' + pieCount)
        
-        pie.appendChild(styleDef)
-        // const styleDefs = document.createElementNS(SVG, 'defs');
-        // const styleEl = document.createElementNS(SVG, 'style');
-        // styleEl.setAttribute('type', 'text/css');
-        
-       // styleDefs.appendChild(styleEl)
-
-        
         slices.forEach(s => {
             
             //TODO assign endo of slice i-1 to start of slice i directly!!
             //SLICES
             const a = s.startAngle;
             const o = a + s.sweepAngle;
+            const charRadius = _radius
             const start = getCoords(cx, cy, _radius, a);
-            const charX = getCoords(cx, cy, _radius/2, a)
+            const char = getCoords(cx, cy, charRadius, a + s.sweepAngle /2)
+        
             const end = getCoords(cx, cy, _radius, o);
             const dir = s.sweepAngle > 0 ? 1 : 0;
             const swap = Math.abs(s.sweepAngle) % 360 < 180 ? 0 : 1;
@@ -166,41 +135,23 @@ window.onload = function () {
                     id: `slice${pieCount}${sliceCount}`, class: "slice", d: d, stroke: null, strokeWidth: strokeW, opacity: 1, fill: 'none'
                 }
             };
-
+            
+            // CREATE DOM Slices
             const newSlice = getNode(path.type, path.options);
             newSlice.setAttribute('stroke', randomFill());
             pie.appendChild(newSlice);
+         
            
-            
             
             // PERCENTAGE
             const percent = `${Math.round(s.sweepAngle / 3.6)}%`;
-            let coords = getCenter(newSlice);
-            console.log(`coords: ${JSON.stringify(coords)}`)
-            console.log(`BBox(): ${JSON.stringify(newSlice.getBBox())}`)
-        //     let perc = {
-        //         'type': 'text', 'options': {
-        //             id: `perc${sliceCount}`,
-        //             class: 'perc',
-        //             x: coords.cx, y: coords.cy, fontSize: '15px', fontFamily: "Barlow-Medium", textAnchor: 'middle', dominantBaseline: 'middle', fill: obj.color, opacity: 1
-        //         }
-        //     };
-        //     let newPerc = getNode(perc.type, perc.options);
-        //    
-        //     pie.appendChild(newPerc);
-        //     let el = document.getElementById(newPerc.id)
-        //     el.setAttribute('text-content', `${percent}`)
-            
-            // console.log(el.getAttribute('text-content'));
-            // console.log(el.getAttribute('x'))
-            
-             let percString =
-                 `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${coords.cx}" y="${coords.cy}" font-family="Barlow-Medium" font-size="35px" text-anchor="middle" alignment-baseline="mathematical" fill="${obj.color}" opacity="1" text-content="${percent}">${percent}</text></svg>`
-            
+                
+            let percString =
+                `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${char.x}" y="${char.y}" font-family="Barlow-Medium" font-size="35px" text-anchor="middle" alignment-baseline="mathematical" fill="${obj.color}" opacity="1" text-content="${percent}">${percent}</text></svg>`
+            // CREATE DOM PERCENTAGE
             const newTest = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
             pie.appendChild(newTest);
-            // let test = document.getElementById(newTest.id)
-            // console.log(test.getAttribute('text-content'))
+           
             sliceCount++;
             return d;
         });
@@ -240,7 +191,7 @@ window.onload = function () {
         x: 180,
         y: 180,
         r: 200,
-        strokeWidth: 150,
+        strokeWidth: 70,
         data: values2,
         colors: [],//if empty or not set: randomFill()
         // legend
