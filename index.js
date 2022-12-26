@@ -18,10 +18,24 @@ window.onload = function () {
         let randomFill = (`#${(`000000${(Math.floor(Math.random() * 16777215)).toString(16)}`).slice(-6)}`)
         return randomFill;
     };
+    
+    
+    
+    const SVG = "http://www.w3.org/2000/svg";
+    function getNode(elTag, elProps) {
+
+        elTag = document.createElementNS(SVG, elTag);
+        for (const prop in elProps) {
+            elTag.setAttributeNS(null, prop.replace(/[A-Z]/g, function (upper) {
+                return "-" + upper.toLowerCase();
+            }), elProps[ prop ]);
+        }
+        return elTag
+    };
     let pieCount = 0;
     function createPie(obj) {
         
-        const SVG = "http://www.w3.org/2000/svg";
+        
     
         //TODO data as obj.value
         // add params to function
@@ -49,8 +63,8 @@ window.onload = function () {
         };
         
         let pie = new Pie();
-        //create this dynamically
-        const container = document.getElementById('myId');
+        //TODO create this dynamically
+        const container = document.getElementById(obj.id);
         container.style.width = obj.width+'px';
         container.style.height = obj.height+'px';
     
@@ -120,7 +134,7 @@ window.onload = function () {
     //TODO sort descending by value
     let values = [ { value: 383 }, { value: 83 }, { value: 200 }, { value: 300 }, { value: 78 } ]
     const pieObj = {
-        id: 'myId',
+        id: 'yourId',
         // bg-dimensions
         width: 600,
         height: 600,
@@ -134,8 +148,7 @@ window.onload = function () {
         // legend
         legend: 'yes',// 'yes' || 'no'
         percentage: 'yes',// 'yes' || 'no'
-        color: 'white'
-        
+        color: 'white' 
     }
     createPie(pieObj)
     
