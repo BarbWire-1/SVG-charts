@@ -32,12 +32,12 @@ window.onload = function () {
         }
         return elTag
     };
-    
+    // TODO delet unneeded ONLY TESTING
     function getCenter(el) {
         const { x, y, width, height } = el.getBBox();
         const cx = Math.round(width / 2 + x);
         const cy = Math.round(height / 2 + y);
-        return {cx, cy}
+        return {x,y,width,height,cx, cy}
         
     }
    
@@ -73,7 +73,7 @@ window.onload = function () {
         
         //TODO create this dynamically
         const container = document.getElementById(obj.id);
-        container.className = 'pie';
+      
         container.style.width = obj.width+'px';
         container.style.height = obj.height + 'px';
         
@@ -121,8 +121,9 @@ window.onload = function () {
         newPie.setAttribute('height', '100%');
         newPie.setAttribute('overflow', 'visible');
         newPie.setAttribute('viewBox', `0 0 ${obj.width} ${obj.height}`);
-        newPie.setAttribute('xmlns:xlink', "http://www.w3.org/1999/xlink");
-        newPie.setAttribute('xmlns', "http://www.w3.org/2000/svg")
+        // newPie.setAttribute('xmlns:xlink', "http://www.w3.org/1999/xlink");
+        // newPie.setAttribute('xmlns', "http://www.w3.org/2000/svg")
+        newPie.setAttribute('class','pie');
        
         
        
@@ -135,6 +136,7 @@ window.onload = function () {
        
         
         const pie = document.getElementById('pieContainer' + pieCount)
+       
         pie.appendChild(styleDef)
         // const styleDefs = document.createElementNS(SVG, 'defs');
         // const styleEl = document.createElementNS(SVG, 'style');
@@ -161,7 +163,7 @@ window.onload = function () {
             
             const path = {
                 'type': 'path', 'options': {
-                    id: `slice${sliceCount}`, class: "slice", d: d, stroke: null, strokeWidth: strokeW, opacity: 1, fill: 'transparent'
+                    id: `slice${pieCount}${sliceCount}`, class: "slice", d: d, stroke: null, strokeWidth: strokeW, opacity: 1, fill: 'none'
                 }
             };
 
@@ -174,31 +176,31 @@ window.onload = function () {
             // PERCENTAGE
             const percent = `${Math.round(s.sweepAngle / 3.6)}%`;
             let coords = getCenter(newSlice);
-            console.log(coords)
+            console.log(`coords: ${JSON.stringify(coords)}`)
+            console.log(`BBox(): ${JSON.stringify(newSlice.getBBox())}`)
+        //     let perc = {
+        //         'type': 'text', 'options': {
+        //             id: `perc${sliceCount}`,
+        //             class: 'perc',
+        //             x: coords.cx, y: coords.cy, fontSize: '15px', fontFamily: "Barlow-Medium", textAnchor: 'middle', dominantBaseline: 'middle', fill: obj.color, opacity: 1
+        //         }
+        //     };
+        //     let newPerc = getNode(perc.type, perc.options);
+        //    
+        //     pie.appendChild(newPerc);
+        //     let el = document.getElementById(newPerc.id)
+        //     el.setAttribute('text-content', `${percent}`)
             
-            let perc = {
-                'type': 'text', 'options': {
-                    id: `perc${sliceCount}`,
-                    class: 'perc',
-                    x: coords.cx, y: coords.cy, fontSize: '15px', fontFamily: "Barlow-Medium", textAnchor: 'middle', dominantBaseline: 'middle', fill: obj.color, opacity: 1
-                }
-            };
-            let newPerc = getNode(perc.type, perc.options);
-           
-            pie.appendChild(newPerc);
-            let el = document.getElementById(newPerc.id)
-            el.setAttribute('text-content', `${percent}`)
-            
-            console.log(el.getAttribute('text-content'));
-            console.log(el.getAttribute('x'))
+            // console.log(el.getAttribute('text-content'));
+            // console.log(el.getAttribute('x'))
             
              let percString =
-                 `<text id="perc${sliceCount}" class="perc" x="${coords.cx}" y="${coords.cy}" font-family="Barlow-Medium" font-size="15px" text-anchor="middle" fill="${randomFill()}" opacity="1" text-content="${percent}">${percent}</text>`
+                 `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${coords.cx}" y="${coords.cy}" font-family="Barlow-Medium" font-size="35px" text-anchor="middle" alignment-baseline="mathematical" fill="${obj.color}" opacity="1" text-content="${percent}">${percent}</text></svg>`
             
             const newTest = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
             pie.appendChild(newTest);
-            let test = document.getElementById(newTest.id)
-            console.log(test.getAttribute('text-content'))
+            // let test = document.getElementById(newTest.id)
+            // console.log(test.getAttribute('text-content'))
             sliceCount++;
             return d;
         });
@@ -210,8 +212,8 @@ window.onload = function () {
     // include title, text, value
     //TODO sort descending by value
     let values = [ { value: 383 }, { value: 83 }, { value: 200 }, { value: 120 }, { value: 78 } ]
-   
-    const pieObj = {
+   //TODO create an object with props to redraw on change
+   let pieObj = {
         id: 'yourId',
         // bg-dimensions
         width: 600,
@@ -226,8 +228,28 @@ window.onload = function () {
         // legend
         legend: 'yes',// 'yes' || 'no'
         percentage: 'yes',// 'yes' || 'no'
-        color: 'black' 
+        color: 'white' 
+   }
+    let values2 = [ { value: 123 }, { value: 83 }, { value: 27 }, { value: 89 }, { value: 45} ]
+    let pieObj2 = {
+        id: 'yourId2',
+        // bg-dimensions
+        width: 600,
+        height: 600,
+        // pie-settings
+        x: 180,
+        y: 180,
+        r: 200,
+        strokeWidth: 150,
+        data: values2,
+        colors: [],//if empty or not set: randomFill()
+        // legend
+        legend: 'yes',// 'yes' || 'no'
+        percentage: 'yes',// 'yes' || 'no'
+        color: 'black'
     }
     createPie(pieObj)
+    createPie(pieObj2)
     
+    //TODO calculate x,y for text on inerRadius + (radius - innerRadius)/2
 }
