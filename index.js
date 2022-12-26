@@ -6,12 +6,12 @@
 window.onload = function () {
     
     //HELPERS
-   function getCoords(cx, cy, rx, ry, deg) {
+   function getCoords(cx, cy, r, deg) {
         let radians = (deg - 90) * Math.PI / 180.0;
 
         return {
-            x: cx + (rx * Math.cos(radians)),
-            y: cy + (ry * Math.sin(radians))
+            x: cx + (r * Math.cos(radians)),
+            y: cy + (r * Math.sin(radians))
         };
     };
     function randomFill() {
@@ -116,8 +116,8 @@ window.onload = function () {
         
             const s = slice.startA;
             const e = s + slice.sweepA
-            const start = getCoords(cx, cy, _radius, _radius, s);
-            const end = getCoords(cx, cy, _radius, _radius, e);
+            const start = getCoords(cx, cy, _radius, s);
+            const end = getCoords(cx, cy, _radius, e);
 
             const dir = slice.sweepA > 0 ? 1 : 0;
             const swap = Math.abs(slice.sweepA) % 360 < 180 ? 0 : 1;
