@@ -2,7 +2,7 @@
  *   Copyright (c) 2022 
  *   All rights reserved.
  */
-
+//TODO style defs worked when added manually... WHAT AM I MISSING???
 window.onload = function () {
     
     //HELPERS
@@ -45,7 +45,7 @@ window.onload = function () {
     
     
     
-    
+    const parser = new DOMParser();
     
     let pieCount = 0;
     function createPie(obj) {
@@ -75,8 +75,13 @@ window.onload = function () {
         const container = document.getElementById(obj.id);
         container.className = 'pie';
         container.style.width = obj.width+'px';
-        container.style.height = obj.height+'px';
-    
+        container.style.height = obj.height + 'px';
+        
+        const styleDefString = `<defs><style type="text/css"></style></defs>`
+        let styleDef = parser.parseFromString(styleDefString, 'text/html').body.childNodes[ 0 ];
+        container.appendChild(styleDef)
+        
+        
         let slices = [];
         for (let i = 0; i < obj.data.length; i++) {
         
@@ -112,13 +117,26 @@ window.onload = function () {
         // TODO perhaps replace with the function from editor...
         const newPie = document.createElementNS(SVG, 'svg')
         newPie.setAttribute('id', 'pieContainer'+ pieCount);
-        newPie.setAttribute('x', obj.x);
-        newPie.setAttribute('y', obj.y);
+        // newPie.setAttribute('x', obj.x);
+        // newPie.setAttribute('y', obj.y);
         newPie.setAttribute('width', '100%');
         newPie.setAttribute('height', '100%');
+        newPie.setAttribute('overflow', 'visible');
+        newPie.setAttribute('viewport', `0 0 ${obj.width} ${obj.height}`);
         container.appendChild(newPie);
         
+        
+       
+       
+        
         const pie = document.getElementById('pieContainer' + pieCount)
+        pie.appendChild(styleDef)
+        // const styleDefs = document.createElementNS(SVG, 'defs');
+        // const styleEl = document.createElementNS(SVG, 'style');
+        // styleEl.setAttribute('type', 'text/css');
+        
+       // styleDefs.appendChild(styleEl)
+
         
         slices.forEach(s => {
             
@@ -127,6 +145,7 @@ window.onload = function () {
             const a = s.startAngle;
             const o = a + s.sweepAngle;
             const start = getCoords(cx, cy, _radius, a);
+            const charX = getCoords(cx, cy, _radius/2, a)
             const end = getCoords(cx, cy, _radius, o);
             const dir = s.sweepAngle > 0 ? 1 : 0;
             const swap = Math.abs(s.sweepAngle) % 360 < 180 ? 0 : 1;
@@ -137,14 +156,14 @@ window.onload = function () {
             
             const path = {
                 'type': 'path', 'options': {
-                    id: `slice${sliceCount}`, class: "slice", d: d, stroke: null, strokeWidth: strokeW, opacity: 1, fill: 'none'
+                    id: `slice${sliceCount}`, class: "slice", d: d, stroke: null, strokeWidth: strokeW, opacity: 1, fill: 'transparent'
                 }
             };
 
             const newSlice = getNode(path.type, path.options);
             newSlice.setAttribute('stroke', randomFill());
             pie.appendChild(newSlice);
-            sliceCount++;
+           
             
             
             // PERCENTAGE
@@ -152,22 +171,30 @@ window.onload = function () {
             let coords = getCenter(newSlice);
             console.log(coords)
             
-            const perc = {
-                'type': 'text', 'options': {
-                    id: `perc${sliceCount}`, class: 'perc', x: `${coords.cx}px`, y: `${coords.cx}px`, fontFamily: 'Arial', fontSize: '15px', textAnchor: 'middle', dominantBaseline: 'middle', textContent: percent , fill: obj.color, opacity: 1
-                }
-            };
-            const newPerc = getNode(perc.type, perc.options);
-            newPerc.setAttribute('text-content', 'test');
-            pie.appendChild(newPerc);
+        //     let perc = {
+        //         'type': 'text', 'options': {
+        //             id: `perc${sliceCount}`,
+        //             class: 'perc',
+        //             x: coords.cx, y: coords.cy, fontSize: '15px', fontFamily: "Barlow-Medium", textAnchor: 'middle', dominantBaseline: 'middle', fill: obj.color, opacity: 1
+        //         }
+        //     };
+        //     let newPerc = getNode(perc.type, perc.options);
+        //    
+        //     pie.appendChild(newPerc);
+        //     let el = document.getElementById(newPerc.id)
+        //     el.setAttribute('text-content', `${percent}`)
+        //     
+        //     console.log(el.getAttribute('text-content'));
+        //     console.log(el.getAttribute('x'))
             
-            console.log(newPerc.textContent)
+             let percString =
+                 `<text id="perc${sliceCount}" class="perc" x="${coords.cx}" y="${coords.cy}" font-family="Barlow-Medium" font-size="15px" text-anchor="middle" fill="${randomFill()}" opacity="1" text-content="${percent}">${percent}</text>`
             
-            let percString =
-                `<text id="perc${sliceCount}" class="perc" x="${coords.cx}px" y="${coords.cy}cy" font-family="Arial" font-size="15px" text-anchor="middle" dominant-baseline="middle" text-content="${percent}" fill="black" opacity="1">15%</text>`
-            
-            const percTest = 
-            
+            const newTest = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
+            pie.appendChild(newTest);
+            let test = document.getElementById(newTest.id)
+            console.log(test.getAttribute('text-content'))
+            sliceCount++;
             return d;
         });
         pieCount++;
