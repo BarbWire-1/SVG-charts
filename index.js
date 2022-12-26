@@ -32,6 +32,13 @@ window.onload = function () {
         }
         return elTag
     };
+   
+        
+    
+    
+    
+    
+    
     let pieCount = 0;
     function createPie(obj) {
         
@@ -44,7 +51,9 @@ window.onload = function () {
        
         let total = 0;
         let vals = [];
-        obj.data.forEach(el => vals.push(el.value))
+        // sort values in descending order and push
+        obj.data.sort((a, b) => b.value - a.value).forEach(el => vals.push(el.value))
+            
         console.log(vals)
         //total = obj.data.reduce((a, b) => a + b);
         
@@ -52,19 +61,11 @@ window.onload = function () {
         let sliceCount = 0;
         
         strokeW = Math.min(obj.strokeWidth, obj.r);
-       
-        class Pie { 
-            data = vals;
-            x = obj.x;
-            y = obj.y;
-            radius = obj.r;
-            strokeWidth = obj.strokeWidth;
-            stroke = randomFill()
-        };
+        data = vals;
         
-        let pie = new Pie();
         //TODO create this dynamically
         const container = document.getElementById(obj.id);
+        container.className = 'pie';
         container.style.width = obj.width+'px';
         container.style.height = obj.height+'px';
     
@@ -74,7 +75,7 @@ window.onload = function () {
             slices.push(
                 {
                     startA: slices[ i - 1 ]?.startA + slices[ i - 1 ]?.sweepA || 0,
-                    sweepA: 360 / total * pie.data[ i ],
+                    sweepA: 360 / total * data[ i ],
                     stroke: randomFill(),
                     opacity: 1,
                 }
@@ -88,6 +89,18 @@ window.onload = function () {
         // calculate to move stroke inside chosen radius
         const _radius = obj.r - strokeW / 2;
         
+        /*
+        const path = {
+                'type': 'path', 'options': {
+                    id: null, class: "slice", d: d, stroke: null, strokeWidth: strokeW, opacity: 1, fill: 'none'
+                }
+            };
+
+            const newSlice = getNode(path.type, path.options);
+            newSlice.setAttribute('stroke', randomFill());
+            newSlice.setAttribute('id', `slice${sliceCount}`)
+            document.getElementById('pieContainer' + pieCount).appendChild(newSlice);
+        */
         // TODO perhaps replace with the function from editor...
         const newPie = document.createElementNS(SVG, 'svg')
         newPie.setAttribute('id', 'pieContainer'+ pieCount);
@@ -96,6 +109,7 @@ window.onload = function () {
         newPie.setAttribute('width', '100%');
         newPie.setAttribute('height', '100%');
         container.appendChild(newPie);
+       
         
         
         slices.forEach(slice => {
@@ -110,15 +124,17 @@ window.onload = function () {
             const close = (Math.abs(Math.ceil(slice.sweepA)) >= 360) ? 'z' : ''
 
             const d =
-                `M ${start.x} ${start.y} A ${_radius} ${_radius}  0 ${swap} ${dir} ${end.x} ${end.y} ${close}`
+                `M ${start.x} ${start.y} A ${_radius} ${_radius}  0 ${swap} ${dir} ${end.x} ${end.y} ${close}`;
             
-            const newSlice = document.createElementNS(SVG, 'path');
-            newSlice.setAttribute('id', `slice${sliceCount}`);
-            newSlice.setAttribute('stroke', slice.stroke);
-            newSlice.setAttribute('stroke-width', pie.strokeWidth);
-            newSlice.setAttribute('opacity', 1);
-            newSlice.setAttribute('d', d);
-            newSlice.setAttribute('fill', 'none');
+            const path = {
+                'type': 'path', 'options': {
+                    id: null, class: "slice", d: d, stroke: null, strokeWidth: strokeW, opacity: 1, fill: 'none'
+                }
+            };
+
+            const newSlice = getNode(path.type, path.options);
+            newSlice.setAttribute('stroke', randomFill());
+            newSlice.setAttribute('id', `slice${sliceCount}`)
             document.getElementById('pieContainer' + pieCount).appendChild(newSlice);
 
             sliceCount++;
@@ -133,16 +149,17 @@ window.onload = function () {
     // include title, text, value
     //TODO sort descending by value
     let values = [ { value: 383 }, { value: 83 }, { value: 200 }, { value: 300 }, { value: 78 } ]
+   
     const pieObj = {
         id: 'yourId',
         // bg-dimensions
         width: 600,
         height: 600,
         // pie-settings
-        x: 100,
-        y: 100,
+        x: 180,
+        y: 180,
         r: 200,
-        strokeWidth: 100,
+        strokeWidth:150,
         data: values,
         colors: [],//if empty or not set: randomFill()
         // legend

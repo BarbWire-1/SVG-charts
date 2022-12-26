@@ -7,7 +7,7 @@
     margin: 0;
     padding: 0;
   }
-  #yourId {
+  .pie {
     position: relative;
     top: 50vh; 
     left: 50vw;
