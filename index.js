@@ -77,9 +77,7 @@ window.onload = function () {
         container.style.width = obj.width+'px';
         container.style.height = obj.height + 'px';
         
-        const styleDefString = `<defs><style type="text/css"></style></defs>`
-        let styleDef = parser.parseFromString(styleDefString, 'text/html').body.childNodes[ 0 ];
-        container.appendChild(styleDef)
+        
         
         
         let slices = [];
@@ -122,9 +120,16 @@ window.onload = function () {
         newPie.setAttribute('width', '100%');
         newPie.setAttribute('height', '100%');
         newPie.setAttribute('overflow', 'visible');
-        newPie.setAttribute('viewport', `0 0 ${obj.width} ${obj.height}`);
-        container.appendChild(newPie);
+        newPie.setAttribute('viewBox', `0 0 ${obj.width} ${obj.height}`);
+        newPie.setAttribute('xmlns:xlink', "http://www.w3.org/1999/xlink");
+        newPie.setAttribute('xmlns', "http://www.w3.org/2000/svg")
+       
         
+       
+       
+        container.appendChild(newPie);
+        const styleDefString = `<defs><style type="text/css"></style></defs>`
+        let styleDef = parser.parseFromString(styleDefString, 'text/html').body.childNodes[ 0 ];
         
        
        
@@ -171,21 +176,21 @@ window.onload = function () {
             let coords = getCenter(newSlice);
             console.log(coords)
             
-        //     let perc = {
-        //         'type': 'text', 'options': {
-        //             id: `perc${sliceCount}`,
-        //             class: 'perc',
-        //             x: coords.cx, y: coords.cy, fontSize: '15px', fontFamily: "Barlow-Medium", textAnchor: 'middle', dominantBaseline: 'middle', fill: obj.color, opacity: 1
-        //         }
-        //     };
-        //     let newPerc = getNode(perc.type, perc.options);
-        //    
-        //     pie.appendChild(newPerc);
-        //     let el = document.getElementById(newPerc.id)
-        //     el.setAttribute('text-content', `${percent}`)
-        //     
-        //     console.log(el.getAttribute('text-content'));
-        //     console.log(el.getAttribute('x'))
+            let perc = {
+                'type': 'text', 'options': {
+                    id: `perc${sliceCount}`,
+                    class: 'perc',
+                    x: coords.cx, y: coords.cy, fontSize: '15px', fontFamily: "Barlow-Medium", textAnchor: 'middle', dominantBaseline: 'middle', fill: obj.color, opacity: 1
+                }
+            };
+            let newPerc = getNode(perc.type, perc.options);
+           
+            pie.appendChild(newPerc);
+            let el = document.getElementById(newPerc.id)
+            el.setAttribute('text-content', `${percent}`)
+            
+            console.log(el.getAttribute('text-content'));
+            console.log(el.getAttribute('x'))
             
              let percString =
                  `<text id="perc${sliceCount}" class="perc" x="${coords.cx}" y="${coords.cy}" font-family="Barlow-Medium" font-size="15px" text-anchor="middle" fill="${randomFill()}" opacity="1" text-content="${percent}">${percent}</text>`
