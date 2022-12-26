@@ -2,7 +2,7 @@
  *   Copyright (c) 2022 
  *   All rights reserved.
  */
-//TODO style defs worked when added manually... WHAT AM I MISSING???
+
 window.onload = function () {
     
     //HELPERS
@@ -33,18 +33,6 @@ window.onload = function () {
         return elTag
     };
     // TODO delet unneeded ONLY TESTING
-    function getCenter(el) {
-        const { x, y, width, height } = el.getBBox();
-        const cx = Math.round(width / 2 + x);
-        const cy = Math.round(height / 2 + y);
-        return {x,y,width,height,cx, cy}
-        
-    }
-   
-        
-    
-    
-    
     const parser = new DOMParser();
     
     let pieCount = 0;
@@ -66,22 +54,21 @@ window.onload = function () {
         strokeW = Math.min(obj.strokeWidth, obj.r);
         data = vals;//???
         
-        //TODO create this dynamically
+        //TODO create this dynamically - IF AT ALL
+        // else set shadow on svg-container
         const container = document.getElementById(obj.id);
-      
         container.style.width = obj.width+'px';
         container.style.height = obj.height + 'px';
         
-        
-        
-        
         let slices = [];
+        // does this array make any sense?
+        const degPercent = 360/total
         for (let i = 0; i < obj.data.length; i++) {
-        
             slices.push(
-                {
+                {   // start at end of previous
+                    sweepAngle: degPercent * data[ i ],
                     startAngle: slices[ i - 1 ]?.startAngle + slices[ i - 1 ]?.sweepAngle || 0,
-                    sweepAngle: 360 / total * data[ i ],
+                    percent: `${Math.round(degPercent * data[ i ] / 3.6)}%`,
                     stroke: randomFill(),
                     opacity: 1,
                 }
@@ -143,11 +130,9 @@ window.onload = function () {
          
            
             
-            // PERCENTAGE
-            const percent = `${Math.round(s.sweepAngle / 3.6)}%`;
-                
+            // PERCENTAGE  
             let percString =
-                `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${char.x}" y="${char.y}" font-family="Barlow-Medium" font-size="35px" text-anchor="middle" alignment-baseline="mathematical" fill="${obj.color}" opacity="1" text-content="${percent}">${percent}</text></svg>`
+                `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${char.x}" y="${char.y}" font-family="Poppins" font-size="${obj.fontSize}px" text-anchor="middle" alignment-baseline="mathematical" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
             // CREATE DOM PERCENTAGE
             const newTest = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
             pie.appendChild(newTest);
@@ -179,7 +164,8 @@ window.onload = function () {
         // legend
         legend: 'yes',// 'yes' || 'no'
         percentage: 'yes',// 'yes' || 'no'
-        color: 'white' 
+        color: 'white',
+        fontSize:30
    }
     let values2 = [ { value: 123 }, { value: 83 }, { value: 27 }, { value: 89 }, { value: 45} ]
     let pieObj2 = {
@@ -190,14 +176,15 @@ window.onload = function () {
         // pie-settings
         x: 180,
         y: 180,
-        r: 200,
+        r: 100,
         strokeWidth: 70,
         data: values2,
         colors: [],//if empty or not set: randomFill()
         // legend
         legend: 'yes',// 'yes' || 'no'
         percentage: 'yes',// 'yes' || 'no'
-        color: 'black'
+        color: 'black',
+        fontSize: 20
     }
     createPie(pieObj)
     createPie(pieObj2)
