@@ -6,7 +6,7 @@
   *{
     margin: 0;
     padding: 0;
-    /* font-family:Arial, Helvetica, sans-serif; */
+     font-family: Poppin,Arial, Helvetica, sans-serif; 
   }
   .pie {
     /* if absolute => stacked */
@@ -19,12 +19,5 @@
     box-shadow: 13px 15px 51px -4px #00000054;
 
   }
-    .perc {
-    color:rgb(183, 36, 36)
-  }
-/* load WOFF2 font if possible, otherwise WOFF, else use OpenType font */ 
-@font-face {
-    font-family: "Barlow-Medium";
-    src: url('./Fonts/Barlow-Medium.ttf') format("truetype");
-}
+  
 

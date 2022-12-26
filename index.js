@@ -32,7 +32,7 @@ window.onload = function () {
         }
         return elTag
     };
-    // TODO delet unneeded ONLY TESTING
+    // TODO delete unneeded ONLY TESTING
     const parser = new DOMParser();
     
     let pieCount = 0;
@@ -50,7 +50,9 @@ window.onload = function () {
         // PREPARE DATA
         obj.data.sort((a, b) => b.value - a.value)
             .forEach(el => vals.push(el.value));
-        obj.data.forEach(el => total += el.value)
+        
+        obj.data.forEach(el => total += el.value);
+        
         strokeW = Math.min(obj.strokeWidth, obj.r);
         data = vals;//???
         
@@ -131,16 +133,19 @@ window.onload = function () {
          
            
             
-            // PERCENTAGE  
-            let percString =
-                `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${char.x}" y="${char.y}" font-family="Poppins" font-size="${obj.fontSize}px" font-weight="bolder" text-anchor="middle" alignment-baseline="central" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
-            // CREATE DOM PERCENTAGE
-            const newTest = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
-            pie.appendChild(newTest);
-           
+            // PERCENTAGE 
+            if (obj.percentage) {
+                let percString =
+                    // TODO why does this need to be wrapped in an additional svg in order to get rendered???
+                    `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${char.x}" y="${char.y}"  font-size="${obj.fontSize}px" font-weight="bolder" text-anchor="middle" alignment-baseline="central" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
+            
+                // CREATE DOM PERCENTAGE
+                const newTest = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
+                pie.appendChild(newTest);
+            }
             sliceCount++;
-            return d;
         });
+        
         pieCount++;
     };
 
@@ -164,7 +169,7 @@ window.onload = function () {
         colors: ['#4a4e4d' , '#0e9aa7' , '#3da4ab' , '#f6cd61' , '#fe8a71'],//if empty or not set: randomFill()
         // legend
         legend: 'yes',// 'yes' || 'no'
-        percentage: 'yes',// 'yes' || 'no'
+        percentage: 1,// 1 || 0
         color: 'white',
         fontSize:30
    }
@@ -183,7 +188,7 @@ window.onload = function () {
         colors: [ '#ee4035','#f37736' , '#fdf498' , '#7bc043' , '#0392cf' ],//if empty or not set: randomFill()
         // legend
         legend: 'yes',// 'yes' || 'no'
-        percentage: 'yes',// 'yes' || 'no'
+        percentage: 0,// 1 || 0
         color: 'black',
         fontSize: 18
     }
