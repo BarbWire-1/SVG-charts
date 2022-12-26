@@ -32,6 +32,14 @@ window.onload = function () {
         }
         return elTag
     };
+    
+    function getCenter(el) {
+        const { x, y, width, height } = el.getBBox();
+        const cx = Math.round(width / 2 + x);
+        const cy = Math.round(height / 2 + y);
+        return {cx, cy}
+        
+    }
    
         
     
@@ -74,8 +82,8 @@ window.onload = function () {
         
             slices.push(
                 {
-                    startA: slices[ i - 1 ]?.startA + slices[ i - 1 ]?.sweepA || 0,
-                    sweepA: 360 / total * data[ i ],
+                    startAngle: slices[ i - 1 ]?.startAngle + slices[ i - 1 ]?.sweepAngle || 0,
+                    sweepAngle: 360 / total * data[ i ],
                     stroke: randomFill(),
                     opacity: 1,
                 }
@@ -109,35 +117,56 @@ window.onload = function () {
         newPie.setAttribute('width', '100%');
         newPie.setAttribute('height', '100%');
         container.appendChild(newPie);
-       
         
+        const pie = document.getElementById('pieContainer' + pieCount)
         
-        slices.forEach(slice => {
-        
-            const s = slice.startA;
-            const e = s + slice.sweepA
-            const start = getCoords(cx, cy, _radius, s);
-            const end = getCoords(cx, cy, _radius, e);
-
-            const dir = slice.sweepA > 0 ? 1 : 0;
-            const swap = Math.abs(slice.sweepA) % 360 < 180 ? 0 : 1;
-            const close = (Math.abs(Math.ceil(slice.sweepA)) >= 360) ? 'z' : ''
+        slices.forEach(s => {
+            
+            //TODO assign endo of slice i-1 to start of slice i directly!!
+            //SLICES
+            const a = s.startAngle;
+            const o = a + s.sweepAngle;
+            const start = getCoords(cx, cy, _radius, a);
+            const end = getCoords(cx, cy, _radius, o);
+            const dir = s.sweepAngle > 0 ? 1 : 0;
+            const swap = Math.abs(s.sweepAngle) % 360 < 180 ? 0 : 1;
+            const close = (Math.abs(Math.ceil(s.sweepAngle)) >= 360) ? 'z' : ''
 
             const d =
                 `M ${start.x} ${start.y} A ${_radius} ${_radius}  0 ${swap} ${dir} ${end.x} ${end.y} ${close}`;
             
             const path = {
                 'type': 'path', 'options': {
-                    id: null, class: "slice", d: d, stroke: null, strokeWidth: strokeW, opacity: 1, fill: 'none'
+                    id: `slice${sliceCount}`, class: "slice", d: d, stroke: null, strokeWidth: strokeW, opacity: 1, fill: 'none'
                 }
             };
 
             const newSlice = getNode(path.type, path.options);
             newSlice.setAttribute('stroke', randomFill());
-            newSlice.setAttribute('id', `slice${sliceCount}`)
-            document.getElementById('pieContainer' + pieCount).appendChild(newSlice);
-
+            pie.appendChild(newSlice);
             sliceCount++;
+            
+            
+            // PERCENTAGE
+            const percent = `${Math.round(s.sweepAngle / 3.6)}%`;
+            let coords = getCenter(newSlice);
+            console.log(coords)
+            
+            const perc = {
+                'type': 'text', 'options': {
+                    id: `perc${sliceCount}`, class: 'perc', x: `${coords.cx}px`, y: `${coords.cx}px`, fontFamily: 'Arial', fontSize: '15px', textAnchor: 'middle', dominantBaseline: 'middle', textContent: percent , fill: obj.color, opacity: 1
+                }
+            };
+            const newPerc = getNode(perc.type, perc.options);
+            newPerc.setAttribute('text-content', 'test');
+            pie.appendChild(newPerc);
+            
+            console.log(newPerc.textContent)
+            
+            let percString =
+                `<text id="perc${sliceCount}" class="perc" x="${coords.cx}px" y="${coords.cy}cy" font-family="Arial" font-size="15px" text-anchor="middle" dominant-baseline="middle" text-content="${percent}" fill="black" opacity="1">15%</text>`
+            
+            const percTest = 
             
             return d;
         });
@@ -148,7 +177,7 @@ window.onload = function () {
     // USAGE
     // include title, text, value
     //TODO sort descending by value
-    let values = [ { value: 383 }, { value: 83 }, { value: 200 }, { value: 300 }, { value: 78 } ]
+    let values = [ { value: 383 }, { value: 83 }, { value: 200 }, { value: 120 }, { value: 78 } ]
    
     const pieObj = {
         id: 'yourId',
@@ -165,7 +194,7 @@ window.onload = function () {
         // legend
         legend: 'yes',// 'yes' || 'no'
         percentage: 'yes',// 'yes' || 'no'
-        color: 'white' 
+        color: 'black' 
     }
     createPie(pieObj)
     
