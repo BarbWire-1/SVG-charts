@@ -69,7 +69,7 @@ window.onload = function () {
                     sweepAngle: degPercent * data[ i ],
                     startAngle: slices[ i - 1 ]?.startAngle + slices[ i - 1 ]?.sweepAngle || 0,
                     percent: `${Math.round(degPercent * data[ i ] / 3.6)}%`,
-                    stroke: randomFill(),
+                    stroke: obj.colors[i] || randomFill(),
                     opacity: 1,
                 }
             
@@ -100,6 +100,7 @@ window.onload = function () {
         const pie = document.getElementById('pieContainer' + pieCount)
        
         slices.forEach(s => {
+            console.log(s.stroke)
             
             //TODO assign endo of slice i-1 to start of slice i directly!!
             //SLICES
@@ -119,20 +120,20 @@ window.onload = function () {
             
             const path = {
                 'type': 'path', 'options': {
-                    id: `slice${pieCount}${sliceCount}`, class: "slice", d: d, stroke: null, strokeWidth: strokeW, opacity: 1, fill: 'none'
+                    id: `slice${pieCount}${sliceCount}`, class: "slice", d: d, stroke: s.stroke, strokeWidth: strokeW, opacity: 1, fill: 'none'
                 }
             };
             
             // CREATE DOM Slices
             const newSlice = getNode(path.type, path.options);
-            newSlice.setAttribute('stroke', randomFill());
+            // newSlice.setAttribute('stroke', randomFill());
             pie.appendChild(newSlice);
          
            
             
             // PERCENTAGE  
             let percString =
-                `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${char.x}" y="${char.y}" font-family="Poppins" font-size="${obj.fontSize}px" text-anchor="middle" alignment-baseline="mathematical" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
+                `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${char.x}" y="${char.y}" font-family="Poppins" font-size="${obj.fontSize}px" font-weight="bolder" text-anchor="middle" alignment-baseline="central" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
             // CREATE DOM PERCENTAGE
             const newTest = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
             pie.appendChild(newTest);
@@ -160,7 +161,7 @@ window.onload = function () {
         r: 200,
         strokeWidth:150,
         data: values,
-        colors: [],//if empty or not set: randomFill()
+        colors: ['#4a4e4d' , '#0e9aa7' , '#3da4ab' , '#f6cd61' , '#fe8a71'],//if empty or not set: randomFill()
         // legend
         legend: 'yes',// 'yes' || 'no'
         percentage: 'yes',// 'yes' || 'no'
@@ -172,19 +173,19 @@ window.onload = function () {
         id: 'yourId2',
         // bg-dimensions
         width: 600,
-        height: 600,
+        height: 300,
         // pie-settings
-        x: 180,
-        y: 180,
+        x: 380,
+        y: 40,
         r: 100,
         strokeWidth: 70,
         data: values2,
-        colors: [],//if empty or not set: randomFill()
+        colors: [ '#ee4035','#f37736' , '#fdf498' , '#7bc043' , '#0392cf' ],//if empty or not set: randomFill()
         // legend
         legend: 'yes',// 'yes' || 'no'
         percentage: 'yes',// 'yes' || 'no'
         color: 'black',
-        fontSize: 20
+        fontSize: 18
     }
     createPie(pieObj)
     createPie(pieObj2)

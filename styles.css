@@ -12,9 +12,9 @@
     /* if absolute => stacked */
     position:relative;
     /* center screen */
-    top: 50vh; 
+    top: 20vh; 
     left: 50vw; 
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%);
     background: #8a8b8b1a;
     box-shadow: 13px 15px 51px -4px #00000054;
 
