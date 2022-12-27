@@ -8,6 +8,7 @@ import { createSVG } from "../helpers/createSVG.js";
 import { getCoords } from "../helpers/getCoords.js";
 import { randomHex } from "../helpers/randomHex.js";
 
+
 // TODO delete unneeded ONLY TESTING
 const parser = new DOMParser();
 const SVG = "http://www.w3.org/2000/svg";
@@ -68,7 +69,6 @@ export function pieChart(obj) {
     };
     const newPie = createSVG(pieSVG.type, pieSVG.options)
     container.appendChild(newPie);
-    const pie = document.getElementById('pieContainer' + pieCount)
 
     // CALCULATE AND APPEND SLICES
     // TODO check wether to do this in the initial for loop
@@ -79,7 +79,7 @@ export function pieChart(obj) {
         const o = a + s.sweepAngle;
         const charRadius = _radius
         const start = getCoords(cx, cy, _radius, a);
-        const char = getCoords(cx, cy, charRadius, a + s.sweepAngle / 2)
+        const charCoords = getCoords(cx, cy, charRadius, a + s.sweepAngle / 2)
         const end = getCoords(cx, cy, _radius, o);
         const dir = s.sweepAngle > 0 ? 1 : 0;
         const swap = Math.abs(s.sweepAngle) % 360 < 180 ? 0 : 1;
@@ -102,18 +102,18 @@ export function pieChart(obj) {
 
         // CREATE DOM ELS
         const newSlice = createSVG(path.type, path.options);
-        pie.appendChild(newSlice);
+        newPie.appendChild(newSlice);
 
         // PERCENTAGE 
         if (obj.percentage) {
             let percString =
                 // TODO why does this need to be wrapped in an additional svg in order to get rendered???
                 // and text doesn't get applied if created different than using parser????
-                `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${char.x}" y="${char.y}"  font-size="${obj.fontSize}px" font-weight="bolder" text-anchor="middle" alignment-baseline="central" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
+                `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${charCoords.x}" y="${charCoords.y}"  font-size="${obj.fontSize}px" font-weight="bolder" text-anchor="middle" alignment-baseline="central" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
 
                 // CREATE DOM PERCENTAGE
-                const newTest = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
-                pie.appendChild(newTest);
+                const newPerc = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
+                newPie.appendChild(newPerc);
         };
         sliceCount++;
     });
