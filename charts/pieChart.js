@@ -96,8 +96,15 @@ import { randomHex } from "../helpers/randomHex.js";
                 `M ${start.x} ${start.y} A ${_radius} ${_radius}  0 ${swap} ${dir} ${end.x} ${end.y} ${close}`;
 
             const path = {
-                'type': 'path', 'options': {
-                    id: `slice${pieCount}${sliceCount}`, class: "slice", d: d, stroke: s.stroke, strokeWidth: strokeW, opacity: 1, fill: 'none'
+                'type': 'path',
+                'options': {
+                    id: `slice${pieCount}${sliceCount}`,
+                    class: "slice",
+                    d: d,
+                    stroke: s.stroke,
+                    strokeWidth: strokeW,
+                    opacity: 1,
+                    fill: 'none'
                 }
             };
 
