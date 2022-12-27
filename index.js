@@ -76,6 +76,7 @@ window.onload = function () {
     pieChart(pieObj3);
     
 };
+
 //TODO create an class with props to redraw on change (include title, , value, text per value);
 //TODO remove necessaty of parent-div! (for now manually add in html)
 // then add x,y,fill/shadow-filter to parent-svg (for each?, by class)
