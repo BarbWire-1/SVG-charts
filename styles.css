@@ -11,13 +11,14 @@
   .pie {
     /* if absolute => stacked */
     position:relative;
+    display:block;
+    margin:20px;
     /* center screen */
-    top: 20vh; 
+    /* top: 50vh; 
     left: 50vw; 
-    transform: translate(-50%, -20%);
+    transform: translate(-50%, -50%); */
     background: #8a8b8b1a;
     box-shadow: 13px 15px 51px -4px #00000054;
-
   }
   
 
