@@ -13,21 +13,24 @@ import { randomHex } from "../helpers/randomHex.js";
     const SVG = "http://www.w3.org/2000/svg";
 
     let pieCount = 0;
-    export function pieChart(obj) {
+export function pieChart(obj) {
 
-        // colors
-        // legend
+    // colors
+    // legend
 
-        let total = 0;
-        let vals = [];
-        let sliceCount = 0;
+    let total = 0;
+    let vals = [];
+    let slices = [];
+    let sliceCount = 0;
 
-        // PREPARE DATA
-        obj.data.sort((a, b) => b.value - a.value)
-            .forEach(el => vals.push(el.value));
-
-        obj.data.forEach(el => total += el.value);
-
+    // PREPARE DATA
+    obj.data.sort((a, b) => b.value - a.value)
+        .forEach(el => {
+            vals.push(el.value);
+            total += el.value;
+        }
+        );
+        
         let strokeW = Math.min(obj.strokeWidth, obj.r);
         let data = vals;//???
 
@@ -37,7 +40,7 @@ import { randomHex } from "../helpers/randomHex.js";
         container.style.width = obj.width + 'px';
         container.style.height = obj.height + 'px';
 
-        let slices = [];
+        
         // does this array make any sense?
         const degPercent = 360 / total
         for (let i = 0; i < obj.data.length; i++) {

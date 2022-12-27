@@ -10,7 +10,6 @@ window.onload = function () {
     
     // USAGE
     let data0 = [ { value: 383 }, { value: 83 }, { value: 200 }, { value: 120 }, { value: 78 } ]
-   
     let pieObj = {
         id: 'yourId',
         // bg-dimensions
@@ -54,7 +53,8 @@ window.onload = function () {
     pieChart(pieObj2);
     
     
-    let pastelRainbow = [ '#a8e6cf', '#dcedc1', '#ffd3b6', '#ffaaa5', '#ff8b94' ];
+    const pastelRainbow = [ '#a8e6cf', '#dcedc1', '#ffd3b6', '#ffaaa5', '#ff8b94' ];
+    let data3 = [ { value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }, { value: 3 } ];
     let pieObj3 = {
         id: 'yourId3',
         // bg-dimensions
@@ -65,7 +65,7 @@ window.onload = function () {
         y: 40,
         r: 150,
         strokeWidth: 100,
-        data: [ { value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }, { value: 3 } ],
+        data: data3,
         colors: pastelRainbow,//if empty or not set: randomFill()
         // legend
         legend: 1,// 1 || 0
@@ -74,6 +74,7 @@ window.onload = function () {
         fontSize: 18
     };
     pieChart(pieObj3);
+    
 };
 //TODO create an class with props to redraw on change (include title, , value, text per value);
 //TODO remove necessaty of parent-div! (for now manually add in html)
