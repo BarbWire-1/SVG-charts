@@ -80,3 +80,5 @@ window.onload = function () {
 //TODO remove necessaty of parent-div! (for now manually add in html)
 // then add x,y,fill/shadow-filter to parent-svg (for each?, by class)
 // check CSS-possibilities for charts
+//TODO add ONE radius and then just scale by user-settings - more effective???
+// test and measure both approaches!
