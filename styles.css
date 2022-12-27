@@ -2,23 +2,30 @@
  *   Copyright (c) 2022 Barbara Kälin - https://github.com/BarbWire-1/SVG-charts
  *   All rights reserved.
  */
- 
+ body {
+    display:flex;
+    /* flex-direction:row; */
+    flex-wrap: wrap;
+    align-items:center;
+    justify-content:safe;
+    background-color: rgb(39, 39, 39);
+ }
   *{
     margin: 0;
     padding: 0;
-     font-family: Poppin,Arial, Helvetica, sans-serif; 
+    font-family: Poppin,Arial, Helvetica, sans-serif; 
   }
   .pie {
     /* if absolute => stacked */
     position:relative;
-    display:block;
-    margin:20px;
     /* center screen */
-    /* top: 50vh; 
+    /* top: 50vh; */
     left: 50vw; 
-    transform: translate(-50%, -50%); */
-    background: #8a8b8b1a;
-    box-shadow: 13px 15px 51px -4px #00000054;
+    transform: translate(-50%,-5%);
+    background: #f4f4f4;
+    box-shadow: 13px 15px 51px -4px #83828254;
+    
+    margin-top:50px;
   }
   
 
