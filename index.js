@@ -9,10 +9,8 @@ window.onload = function () {
   
     
     // USAGE
-    // include title, text, value
-  
     let data0 = [ { value: 383 }, { value: 83 }, { value: 200 }, { value: 120 }, { value: 78 } ]
-   //TODO create an object with props to redraw on change
+   
     let pieObj = {
             id: 'yourId',
             // bg-dimensions
@@ -75,3 +73,7 @@ window.onload = function () {
     }
     pieChart(pieObj3)
 }
+//TODO create an class with props to redraw on change (include title, , value, text per value);
+//TODO remove necessaty of parent-div! (for now manually add in html)
+// then add x,y,fill/shadow-filter to parent-svg (for each?, by class)
+// check CSS-possibilities for charts

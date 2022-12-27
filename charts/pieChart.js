@@ -8,9 +8,6 @@ import { createSVG } from "../helpers/createSVG.js";
 import { getCoords } from "../helpers/getCoords.js";
 import { randomHex } from "../helpers/randomHex.js";
 
-
-
-
     // TODO delete unneeded ONLY TESTING
     const parser = new DOMParser();
     const SVG = "http://www.w3.org/2000/svg";
@@ -82,7 +79,7 @@ import { randomHex } from "../helpers/randomHex.js";
         slices.forEach(s => {
             console.log(s.stroke)
 
-            //TODO assign endo of slice i-1 to start of slice i directly!!
+            //TODO assign end of slice i-1 to start of slice i directly!!
             //SLICES
             const a = s.startAngle;
             const o = a + s.sweepAngle;
@@ -115,6 +112,7 @@ import { randomHex } from "../helpers/randomHex.js";
             if (obj.percentage) {
                 let percString =
                     // TODO why does this need to be wrapped in an additional svg in order to get rendered???
+                    // and text doesn't get applied if created different than using parser????
                     `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${char.x}" y="${char.y}"  font-size="${obj.fontSize}px" font-weight="bolder" text-anchor="middle" alignment-baseline="central" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
 
                 // CREATE DOM PERCENTAGE
