@@ -16,34 +16,56 @@ let defaultData = [ { value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }, { va
 export class PieData {
     constructor (
         id = undefined,
-        // bg-dimensions
-        width= 600,
-        height= 600,
-        // pie-settings
+       
+        width = 600,
+        height = 600,
+       
         x= 180,
         y= 180,
         r= 200,
         strokeWidth= 150,
         data= defaultData,
         colors= defaultColors,
-        // legend
+       
         legend= 1,
         percentage= 1,
         color= 'white',
         fontSize= 18
+        
     )
     {
-        this.id = id;
-        this.width = width;
+        
+        this.id = id
+           
+            this.width = width,
+            this.height = height,
+            // pie-settings
+            this.x = x,
+            this.y = y,
+            this.r = r,
+            this.strokeWidth = strokeWidth,
+            this.data = data,
+            this.colors = colors,
+            // legend
+            this.legend = legend,
+            this.percentage = percentage,
+            this.color = color,
+            this.fontSize = fontSize
+       
     }
     
     getId() { return this.id };
-    setId(newValue) { this.id = newValue };
+    setId(newValue) { this.id = newValue};
     getWidth() { return this.width };
-    setId(newValue) { this.width = newValue; pieChart(this) }
+    setWidth(newValue) { this.width = newValue ; pieChart(this) }
+    getHeight() { return this.height };
+    setHeight(newValue) { this.height = newValue ; pieChart(this) }
+    getX() { return this.x };
+    setX(newValue) { this.x = newValue;}
     
 }
 
 
 
 
+Object

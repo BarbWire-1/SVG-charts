@@ -75,7 +75,7 @@ window.onload = function () {
     };
     pieChart(pieObj3);
     
-    let test = new Pie('testId')
+    let test = new PieData('testId')
     //pieChart(test)
     console.log(test)
     test.width = 800
