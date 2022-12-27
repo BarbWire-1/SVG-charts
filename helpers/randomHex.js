@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2022 Barbara Kälin
+* Copyright (c) 2022 Barbara Kälin - https://github.com/BarbWire-1/SVG-charts
 * All rights reserved.
 * MIT License
 */
