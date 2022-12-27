@@ -13,7 +13,7 @@
 let defaultColors = [ '#4a4e4d', '#0e9aa7', '#3da4ab', '#f6cd61', '#fe8a71' ];
 let defaultData = [ { value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }, { value: 3 } ];
 // pieChart(pieObj3);
-export class Pie {
+export class PieData {
     constructor (
         id = undefined,
         // bg-dimensions

@@ -4,7 +4,7 @@
  *   MIT License
  */
 import { pieChart } from "./charts/pieChart.js"
-import { Pie } from "./charts/Pie.js";
+import { PieData } from "./charts/Pie.js";
 window.onload = function () {
   
     
