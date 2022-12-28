@@ -55,12 +55,13 @@ export function pieChart(obj) {
     const container = document.getElementById(obj.id);
     container.style.width = obj.width + 'px';
     container.style.height = obj.height + 'px';
+    container.className = 'pie'
 
     const pieSVG = {
         'type': 'svg',
         'options': {
             id: `pieContainer${pieCount}`,
-            class: 'pie',
+            // class: 'pie',
             x: obj.x,
             y: obj.y,
             width: '100%',
@@ -120,6 +121,7 @@ export function pieChart(obj) {
 
     pieCount++;
 };
-    
+ 
+// TODO decide whether to make it a custom-component or just palce setters here
 //TODOadd dropShadow to container-SVG and remove outer div for responsiveness???
 // https://www.w3docs.com/snippets/css/how-to-create-an-svg-drop-shadow.html
