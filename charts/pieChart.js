@@ -27,7 +27,7 @@ export function pieChart(obj) {
 
     const strokeWidth = Math.min(obj.strokeWidth, obj.r);
     const _radius = obj.r - strokeWidth / 2;
-   
+
 
     // PREPARE DATA
     obj.data.sort((a, b) => b.value - a.value)
@@ -37,7 +37,7 @@ export function pieChart(obj) {
         }
         );
     const degPercent = 360 / total;
-    
+
     for (let i = 0; i < obj.data.length; i++) {
         slices.push(
             {   // start at end of previous
@@ -50,7 +50,7 @@ export function pieChart(obj) {
 
         )
     };
-    
+
     // CREATE HOLDING DIV AND SVG VIEWBOX
     const container = document.getElementById(obj.id);
     container.style.width = obj.width + 'px';
@@ -73,8 +73,8 @@ export function pieChart(obj) {
 
     // CALCULATE AND APPEND SLICES
     // TODO check wether to do this in the initial for loop
-    slices.forEach(s => { 
-        
+    slices.forEach(s => {
+
         //VARIABLES FOR PATH
         const a = s.startAngle;
         const o = a + s.sweepAngle;
@@ -115,13 +115,14 @@ export function pieChart(obj) {
                 // CREATE DOM PERCENTAGE
                 const newPerc = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
                 newPie.appendChild(newPerc);
+
         };
         sliceCount++;
     });
 
     pieCount++;
 };
+
  
 // TODO decide whether to make it a custom-component or just palce setters here
-//TODOadd dropShadow to container-SVG and remove outer div for responsiveness???
-// https://www.w3docs.com/snippets/css/how-to-create-an-svg-drop-shadow.html
+
