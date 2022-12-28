@@ -55,12 +55,13 @@ export function pieChart(obj) {
     const container = document.getElementById(obj.id);
     container.style.width = obj.width + 'px';
     container.style.height = obj.height + 'px';
+    container.className = 'pie'
 
     const pieSVG = {
         'type': 'svg',
         'options': {
             id: `pieContainer${pieCount}`,
-            class: 'pie',
+            // class: 'pie',
             x: obj.x,
             y: obj.y,
             width: '100%',
@@ -111,9 +112,10 @@ export function pieChart(obj) {
                 // and text doesn't get applied if created different than using parser????
                 `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${charCoords.x}" y="${charCoords.y}"  font-size="${obj.fontSize}px" font-weight="bolder" text-anchor="middle" alignment-baseline="central" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
 
-            // CREATE DOM PERCENTAGE
-            const newPerc = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
-            newPie.appendChild(newPerc);
+                // CREATE DOM PERCENTAGE
+                const newPerc = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
+                newPie.appendChild(newPerc);
+
         };
         sliceCount++;
     });
@@ -121,5 +123,6 @@ export function pieChart(obj) {
     pieCount++;
 };
 
-//TODOadd dropShadow to container-SVG and remove outer div for responsiveness???
-// https://www.w3docs.com/snippets/css/how-to-create-an-svg-drop-shadow.html
+ 
+// TODO decide whether to make it a custom-component or just palce setters here
+

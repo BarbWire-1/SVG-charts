@@ -4,7 +4,7 @@
  *   MIT License
  */
 import { pieChart } from "./charts/pieChart.js"
-
+import { PieData } from "./charts/Pie.js";
 window.onload = function () {
   
     
@@ -36,8 +36,8 @@ window.onload = function () {
         width: 600,
         height: 300,
         // pie-settings
-        x: 380,
-        y: 40,
+        x: 200,
+        y: 50,
         r: 100,
         strokeWidth: 100,
         data: data1,
@@ -61,8 +61,8 @@ window.onload = function () {
         width: 600,
         height: 400,
         // pie-settings
-        x: 280,
-        y: 40,
+        x: 50,
+        y: 50,
         r: 150,
         strokeWidth: 100,
         data: data3,
@@ -75,6 +75,13 @@ window.onload = function () {
     };
     pieChart(pieObj3);
     
+    let test = new PieData('testPie')
+    pieChart(test)
+    console.log(test)
+    test.width = 800
+    console.log(test)
+    //pieChart(test)
+   
 };
 
 //TODO create an class with props to redraw on change (include title, , value, text per value);
