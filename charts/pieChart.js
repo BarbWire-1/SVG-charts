@@ -192,33 +192,21 @@ export function pieChart(obj) {
         console.log(slice)
         
         // // CREATE on click???
-        // function myFunction() {
-        //     var popup = document.getElementById("myPopup");
-        //     popup.classList.toggle("show");
-        // }
+       
      
-        // TODO Why do values sometimes disappear on mouseleave???
-        
-       perc.addEventListener('click', (e) => {
-            perc.style.opacity = 1;
-            // isClicked = document.getElementById(e.target.id)
-            //removeInfo();
+        // TODO def need an eventHandler here.
+        // want as prev: create on click, remove on click and onleave
+      
+        slice.addEventListener('mouseenter', (e) => {
             createInfo();
-       });
-        // slice.addEventListener('click', (e) => {
-        //     perc.style.opacity = 1;
-        //     // isClicked = document.getElementById(e.target.id)
-        //     //removeInfo();
-        //     createInfo();
-        // });
-        //      
-          
-        slice.addEventListener('mouseleave', () => {
+        });
            
+        slice.addEventListener('mouseleave', () => {
             removeInfo();
             perc.style.opacity = 1;
             
         });
+       
        
            
        
