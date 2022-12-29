@@ -10,6 +10,7 @@ This is the first attempt to create reusable charts using SVG-Elements.
 
 Currently there are pieCharts - but not yet dynamic. Also no other legend than showing percentage of slices.
 Each pie-chart got its own background with own dimension-properties and can be freely placed on that "canvas".
+At least it's a bit interactive ;)
 
 The charts get created by passing a data-obj including data and chart-properties to a function.
 
