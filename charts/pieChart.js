@@ -84,9 +84,8 @@ export function pieChart(obj) {
         //VARIABLES FOR PATH
         const a = s.startAngle;
         const o = a + s.sweepAngle;
-        const charRadius = _radius
         const start = getCoords(cx, cy, _radius, a);
-        const charCoords = getCoords(cx, cy, charRadius, a + s.sweepAngle / 2)
+        
         const end = getCoords(cx, cy, _radius, o);
         const dir = s.sweepAngle > 0 ? 1 : 0;
         const swap = Math.abs(s.sweepAngle) % 360 < 180 ? 0 : 1;
@@ -101,32 +100,45 @@ export function pieChart(obj) {
         const path = {
             'type': 'path',
             'options': {
-                id: `slice${pieCount}${sliceCount}`,
-                class: "slice",
+                id: `slice${pieCount}_${sliceCount}`,
+                class: "slice popup",
                 d: d,
                 stroke: s.stroke,
                 strokeWidth: strokeWidth,
 
             }
         };
-        //         const ringD =
-        //             `M ${start.x} ${start.y} ` +
-        //             `A ${_radius + 10} ${_radius + 10} ` +
-        //             `0 ${swap} ${dir} ` +
-        //             `${end.x} ${end.y} ` +
-        //             `${close}`;
-        //         
-        //         const ring = {
-        //             'type': 'path',
-        //             'options': {
-        //                 id: `slice${pieCount}${sliceCount}`,
-        //                 class: "slice",
-        //                 d: ringD,
-        //                 stroke: 'green',
-        //                 strokeWidth: 5,
-        // 
-        //             }
-        //         };
+        function createRing() {
+            let ringR = obj.r + 8;
+            let start = getCoords(cx, cy, ringR, a);
+            let end = getCoords(cx, cy, ringR, o);
+            const ringD =
+                `M ${start.x} ${start.y} ` +
+                `A ${ringR} ${ringR} ` +
+                `0 ${swap} ${dir} ` +
+                `${end.x} ${end.y} ` +
+                `${close}`;
+                
+            const ring = {
+                'type': 'path',
+                'options': {
+                    id: `ring${pieCount}_${sliceCount}`,
+                    class: "ring",
+                    d: ringD,
+                    stroke: s.stroke,
+                    strokeWidth: 6,
+                    opacity: .6,
+                    strokeLinecap: 'round'
+        
+                }
+            };
+            const newRing = createSVG(ring.type, ring.options);
+            newPie.appendChild(newRing);
+            
+        }
+        function removeRing() {
+            document.getElementById(`ring${pieCount}_${sliceCount}`)?.remove();
+        }
 
         // CREATE DOM ELS
         const newSlice = createSVG(path.type, path.options);
@@ -137,11 +149,11 @@ export function pieChart(obj) {
 
         // PERCENTAGE 
         if (obj.percentage) {
-
+            const charCoords = getCoords(cx, cy, _radius, a + s.sweepAngle / 2)
             let percString =
                 // TODO why does this need to be wrapped in an additional svg in order to get rendered???
                 // and text doesn't get applied if created different than using parser????
-                `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${charCoords.x}" y="${charCoords.y}"  font-size="${obj.fontSize}px" font-weight="bolder" text-anchor="middle" alignment-baseline="central" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
+                `<svg><text id="perc${pieCount}_${sliceCount}" class="perc" x="${charCoords.x}" y="${charCoords.y}"  font-size="${obj.fontSize}px" font-weight="bolder" text-anchor="middle" alignment-baseline="central" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
 
             // CREATE DOM PERCENTAGE
             const newPerc = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
@@ -149,25 +161,29 @@ export function pieChart(obj) {
 
 
         };
-        let perc = document.getElementById(`perc${pieCount}${sliceCount}`);
+        let perc = document.getElementById(`perc${pieCount}_${sliceCount}`);
         let clicks = 0;
         let shownData = [ sortedValues[ sort ], s.percent, ]
-        let slice = document.getElementById(`slice${pieCount}${sliceCount}`);
+        let slice = document.getElementById(`slice${pieCount}_${sliceCount}`);
         
         
         // CREATE on click???
-        // function myFunction() {
-        //     var popup = document.getElementById("myPopup");
-        //     popup.classList.toggle("show");
-        // }
+        function myFunction() {
+            var popup = document.getElementById("myPopup");
+            popup.classList.toggle("show");
+        }
      
         // TODO show data as popup and mark selected instead
         slice.addEventListener('click', () => {
+            myFunction()
             clicks %= 2
             perc.textContent = shownData[ clicks ];
+            clicks === 0 ? createRing() : removeRing();
             clicks++;
         });
+        //TODO remove ring
         slice.addEventListener('mouseleave', () => {
+            removeRing();
             perc.textContent = shownData[ 1 ];
             clicks = 0;
         });

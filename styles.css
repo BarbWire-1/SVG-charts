@@ -26,6 +26,9 @@
     fill: none;
     cursor: pointer
   }
+  .ring {
+    fill: none;
+  }
   
   /* POPUP */
   /* Popup container - can be anything you want */
