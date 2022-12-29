@@ -141,7 +141,7 @@ export function pieChart(obj) {
             let percString =
                 // TODO why does this need to be wrapped in an additional svg in order to get rendered???
                 // and text doesn't get applied if created different than using parser????
-                `<svg xmlns="http://www.w3.org/2000/svg"><text id="perc${pieCount}${sliceCount}" class="perc" x="${charCoords.x}" y="${charCoords.y}"  font-size="${obj.fontSize}px" font-weight="bolder" text-anchor="middle" alignment-baseline="central" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
+                `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${charCoords.x}" y="${charCoords.y}"  font-size="${obj.fontSize}px" font-weight="bolder" text-anchor="middle" alignment-baseline="central" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
 
             // CREATE DOM PERCENTAGE
             const newPerc = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
@@ -153,12 +153,23 @@ export function pieChart(obj) {
         let clicks = 0;
         let shownData = [ sortedValues[ sort ], s.percent, ]
         let slice = document.getElementById(`slice${pieCount}${sliceCount}`);
-        // TODO swap back on mouseleave.
-        // show data as popup and mark selected instead
-        slice.addEventListener('click', e => {
+        
+        
+        // CREATE on click???
+        // function myFunction() {
+        //     var popup = document.getElementById("myPopup");
+        //     popup.classList.toggle("show");
+        // }
+     
+        // TODO show data as popup and mark selected instead
+        slice.addEventListener('click', () => {
             clicks %= 2
-            perc.textContent = shownData[ clicks ]// NOT rendered :(
+            perc.textContent = shownData[ clicks ];
             clicks++;
+        });
+        slice.addEventListener('mouseleave', () => {
+            perc.textContent = shownData[ 1 ];
+            clicks = 0;
         });
         sliceCount++;
     });
