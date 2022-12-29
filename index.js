@@ -77,11 +77,25 @@ window.onload = function () {
     
     let test = new PieData('testPie')
     pieChart(test)
-    console.log(test)
+   // console.log(test)
     test.width = 800
-    console.log(test)
+    //console.log(test)
     //pieChart(test)
-   
+    
+    const testProxy = new Proxy(test, {
+        get(target, key) {
+            return target[ key ] ?? target.getItem(key) ?? undefined;
+        },
+        set(target, key, value) {
+            if (key in target) {
+                return false;
+            }
+            return yourId3.setItem(key, value);
+        },
+    })
+    
+    test.x = '300px';
+   console.log(testProxy)
 };
 
 //TODO create an class with props to redraw on change (include title, , value, text per value);

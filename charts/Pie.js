@@ -14,31 +14,30 @@ let defaultColors = [ '#4a4e4d', '#0e9aa7', '#3da4ab', '#f6cd61', '#fe8a71' ];
 let defaultData = [ { value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }, { value: 3 } ];
 // pieChart(pieObj3);
 export class PieData {
-   testcounter = 0
+    testcounter = 0
     constructor (
         id = `tesPie`,
        
         width = 600,
         height = 600,
        
-        x= 180,
-        y= 180,
-        r= 200,
-        strokeWidth= 150,
-        data= defaultData,
-        colors= defaultColors,
+        x = 180,
+        y = 180,
+        r = 200,
+        strokeWidth = 150,
+        data = defaultData,
+        colors = defaultColors,
        
-        legend= 1,
-        percentage= 1,
-        color= 'white',
-        fontSize= 24
+        legend = 1,
+        percentage = 1,
+        color = 'white',
+        fontSize = 24
         
-    )
-    {
+    ) {
         
         this.id = id
            
-            this.width = width,
+        this.width = width,
             this.height = height,
             // pie-settings
             this.x = x,
@@ -52,20 +51,22 @@ export class PieData {
             this.percentage = percentage,
             this.color = color,
             this.fontSize = fontSize
+            
        
-    }
-    // 
-    // getId() { return this.id };
-    // setId(newValue) { this.id = newValue};
-    // getWidth() { return this.width };
-    // setWidth(newValue) { this.width = newValue ; pieChart(this) }
-    // getHeight() { return this.height };
-    // setHeight(newValue) { this.height = newValue ; pieChart(this) }
-    // getX() { return this.x };
-    // setX(newValue) { this.x = newValue;}
     
+        // 
+        // getId() { return this.id };
+        // setId(newValue) { this.id = newValue};
+        // getWidth() { return this.width };
+        // setWidth(newValue) { this.width = newValue ; pieChart(this) }
+        // getHeight() { return this.height };
+        // setHeight(newValue) { this.height = newValue ; pieChart(this) }
+        // getX() { return this.x };
+        // setX(newValue) { this.x = newValue;}
+    
+    
+   
+
+    }
 }
-
-
-
 

@@ -148,6 +148,7 @@ export function pieChart(obj) {
             // CREATE DOM PERCENTAGE
             let newToolTip = parser.parseFromString(toolTipString, 'text/html').body.childNodes[ 0 ];
             newPie.appendChild(newToolTip);
+            perc.style.opacity = 0;
 
         };
         
@@ -155,6 +156,7 @@ export function pieChart(obj) {
         function removeInfo() {
             document.getElementById(`ring${pieCount}_${sliceCount}`)?.remove();
             document.getElementById(`toolTip${pieCount}_${sliceCount}`)?.remove();
+            perc.style.opacity = 1;
             
         }
 
@@ -195,32 +197,31 @@ export function pieChart(obj) {
         //     popup.classList.toggle("show");
         // }
      
-        // TODO show data as popup and mark selected instead
+        // TODO Why do values sometimes disappear on mouseleave???
         
-        let clicks = 0;
-        let isClicked = undefined;
+       perc.addEventListener('click', (e) => {
+            perc.style.opacity = 1;
+            // isClicked = document.getElementById(e.target.id)
+            //removeInfo();
+            createInfo();
+       });
         slice.addEventListener('click', (e) => {
-           isClicked = document.getElementById(e.target.id)
-            console.log(isClicked)
-            if (clicks % 2 === 0) {
-                perc.style.opacity = 0;
-                createInfo(); 
-            } else {
-                perc.style.opacity = 1;
-                removeInfo();
-            } 
-            clicks++;
-           
-            console.log(`clicks%2: ${clicks % 2}`)
-            isClicked?.addEventListener('mouseleave', () => {
-
-                removeInfo();
-                perc.style.opacity = 1
-                console.log(`clicks: ${clicks}`);
-                clicks = 0;
-            });
-           
+            perc.style.opacity = 1;
+            // isClicked = document.getElementById(e.target.id)
+            //removeInfo();
+            createInfo();
         });
+             
+          
+        slice.addEventListener('mouseleave', () => {
+           
+            removeInfo();
+            perc.style.opacity = 1;
+            
+        });
+       
+           
+       
 
        
         
