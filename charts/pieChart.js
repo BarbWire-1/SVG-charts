@@ -205,13 +205,13 @@ export function pieChart(obj) {
             //removeInfo();
             createInfo();
        });
-        slice.addEventListener('click', (e) => {
-            perc.style.opacity = 1;
-            // isClicked = document.getElementById(e.target.id)
-            //removeInfo();
-            createInfo();
-        });
-             
+        // slice.addEventListener('click', (e) => {
+        //     perc.style.opacity = 1;
+        //     // isClicked = document.getElementById(e.target.id)
+        //     //removeInfo();
+        //     createInfo();
+        // });
+        //      
           
         slice.addEventListener('mouseleave', () => {
            

@@ -24,7 +24,7 @@
   }
   .slice {
     fill: none;
-    cursor: pointer
+    /* cursor: pointer  */
   }
   .ring {
     fill: none;
@@ -32,6 +32,7 @@
   .perc{
     font-weight: bolder;
     text-anchor: middle;
+    cursor: pointer 
   
   }
   .tooltipContainer {
