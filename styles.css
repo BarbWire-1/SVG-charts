@@ -22,5 +22,7 @@
     box-shadow: 13px 15px 51px -4px #3b3b3b54;
     font-family: Poppin,Arial, Helvetica, sans-serif; 
   }
-  
+  .slice {
+    fill: none
+  }
 

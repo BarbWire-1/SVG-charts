@@ -17,6 +17,16 @@ let pieCount = 0;
 
 export function pieChart(obj) {
 
+    // CREATE HOLDING DIV AND SVG VIEWBOX
+
+    let container = Object.assign(document.createElement('div'), { id: obj.id });
+    document.body.appendChild(container);
+
+    container.style.width = `${obj.width}px`;
+    container.style.height = obj.height + 'px';
+    container.className = 'pie';
+
+
     let total = 0;
     let sortedValues = [];
     let slices = [];
@@ -51,11 +61,7 @@ export function pieChart(obj) {
         )
     };
 
-    // CREATE HOLDING DIV AND SVG VIEWBOX
-    const container = document.getElementById(obj.id);
-    container.style.width = obj.width + 'px';
-    container.style.height = obj.height + 'px';
-    container.className = 'pie'
+
 
     const pieSVG = {
         'type': 'svg',
@@ -74,7 +80,7 @@ export function pieChart(obj) {
     // CALCULATE AND APPEND SLICES
     // TODO check wether to do this in the initial for loop
     slices.forEach(s => {
-
+        let sort = sliceCount;
         //VARIABLES FOR PATH
         const a = s.startAngle;
         const o = a + s.sweepAngle;
@@ -86,7 +92,11 @@ export function pieChart(obj) {
         const swap = Math.abs(s.sweepAngle) % 360 < 180 ? 0 : 1;
         const close = (Math.abs(Math.ceil(s.sweepAngle)) >= 360) ? 'z' : ''
         const d =
-            `M ${start.x} ${start.y} A ${_radius} ${_radius}  0 ${swap} ${dir} ${end.x} ${end.y} ${close}`;
+            `M ${start.x} ${start.y} ` +
+            `A ${_radius} ${_radius} ` +
+            `0 ${swap} ${dir} ` +
+            `${end.x} ${end.y} ` +
+            `${close}`;
 
         const path = {
             'type': 'path',
@@ -96,33 +106,66 @@ export function pieChart(obj) {
                 d: d,
                 stroke: s.stroke,
                 strokeWidth: strokeWidth,
-                opacity: 1,
-                fill: 'none'
+
             }
         };
+        //         const ringD =
+        //             `M ${start.x} ${start.y} ` +
+        //             `A ${_radius + 10} ${_radius + 10} ` +
+        //             `0 ${swap} ${dir} ` +
+        //             `${end.x} ${end.y} ` +
+        //             `${close}`;
+        //         
+        //         const ring = {
+        //             'type': 'path',
+        //             'options': {
+        //                 id: `slice${pieCount}${sliceCount}`,
+        //                 class: "slice",
+        //                 d: ringD,
+        //                 stroke: 'green',
+        //                 strokeWidth: 5,
+        // 
+        //             }
+        //         };
 
         // CREATE DOM ELS
         const newSlice = createSVG(path.type, path.options);
         newPie.appendChild(newSlice);
 
+
+
+
         // PERCENTAGE 
         if (obj.percentage) {
+
             let percString =
                 // TODO why does this need to be wrapped in an additional svg in order to get rendered???
                 // and text doesn't get applied if created different than using parser????
-                `<svg><text id="perc${pieCount}${sliceCount}" class="perc" x="${charCoords.x}" y="${charCoords.y}"  font-size="${obj.fontSize}px" font-weight="bolder" text-anchor="middle" alignment-baseline="central" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
+                `<svg xmlns="http://www.w3.org/2000/svg"><text id="perc${pieCount}${sliceCount}" class="perc" x="${charCoords.x}" y="${charCoords.y}"  font-size="${obj.fontSize}px" font-weight="bolder" text-anchor="middle" alignment-baseline="central" fill="${obj.color}" opacity="1" text-content="${s.percent}">${s.percent}</text></svg>`
 
-                // CREATE DOM PERCENTAGE
-                const newPerc = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
-                newPie.appendChild(newPerc);
+            // CREATE DOM PERCENTAGE
+            const newPerc = parser.parseFromString(percString, 'text/html').body.childNodes[ 0 ];
+            newPie.appendChild(newPerc);
+
 
         };
+        let perc = document.getElementById(`perc${pieCount}${sliceCount}`);
+        let clicks = 0;
+        let shownData = [ sortedValues[ sort ], s.percent, ]
+        let slice = document.getElementById(`slice${pieCount}${sliceCount}`);
+        // TODO swap back on mouseleave.
+        // show data as popup and mark selected instead
+        slice.addEventListener('click', e => {
+            clicks %= 2
+            perc.textContent = shownData[ clicks ]// NOT rendered :(
+            clicks++;
+        });
         sliceCount++;
     });
 
     pieCount++;
 };
 
- 
+
 // TODO decide whether to make it a custom-component or just palce setters here
 
