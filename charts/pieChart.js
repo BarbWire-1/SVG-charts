@@ -132,11 +132,11 @@ export function pieChart(obj) {
         
                 }
             };
-            
+            //x ="${charCoords.x -75}px" y="${charCoords.y-40}px"
             const newRing = createSVG(ring.type, ring.options);
             newPie.appendChild(newRing);
             const toolTipString =
-                `<svg  id="toolTip${pieCount}_${sliceCount}" width="150px" height="100px" x ="${charCoords.x -75}px" y="${charCoords.y-40}px">
+                `<svg  id="toolTip${pieCount}_${sliceCount}" width="150px" height="100px" x ="50px" y="50px">
                     <rect width="100%" height="100%" fill="black" opacity="0.5" rx="5px" ry="5px"></rect>
                     <text class="tooltiptext" ` +
                     `x ="50%" y="50%" `+
@@ -148,7 +148,7 @@ export function pieChart(obj) {
             // CREATE DOM PERCENTAGE
             let newToolTip = parser.parseFromString(toolTipString, 'text/html').body.childNodes[ 0 ];
             newPie.appendChild(newToolTip);
-            perc.style.opacity = 0;
+           // perc.style.opacity = 0;
 
         };
         
@@ -156,7 +156,7 @@ export function pieChart(obj) {
         function removeInfo() {
             document.getElementById(`ring${pieCount}_${sliceCount}`)?.remove();
             document.getElementById(`toolTip${pieCount}_${sliceCount}`)?.remove();
-            perc.style.opacity = 1;
+            //perc.style.opacity = 1;
             
         }
 
@@ -197,11 +197,11 @@ export function pieChart(obj) {
         // TODO def need an eventHandler here.
         // want as prev: create on click, remove on click and onleave
       
-        slice.addEventListener('mouseenter', (e) => {
+        perc.addEventListener('mouseenter', (e) => {
             createInfo();
         });
            
-        slice.addEventListener('mouseleave', () => {
+        perc.addEventListener('mouseleave', () => {
             removeInfo();
             perc.style.opacity = 1;
             
