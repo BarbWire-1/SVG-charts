@@ -7,11 +7,12 @@
 import { Data, Background } from "./Data.js";
 
 export class Pie extends Data {
-    constructor (id, data) {
-        super(data)
+    constructor (id) {
+        super()
         this.background = new Background(id);
         this.id = id + '_pie';
         this.layout = super.layout;
+        this.values = super.sortedValues;
     }
 
     pie = {
