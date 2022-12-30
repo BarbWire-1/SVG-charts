@@ -1,7 +1,3 @@
-/*
- *   Copyright (c) 2022 
- *   All rights reserved.
- */
 
 /*
 * Copyright (c) 2022 Barbara Kälin - https://github.com/BarbWire-1/SVG-charts
