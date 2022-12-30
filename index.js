@@ -4,7 +4,9 @@
  *   MIT License
  */
 import { pieChart } from "./charts/pieChart.js"
-import { PieData } from "./charts/Pie.js";
+
+
+import {Pie} from './charts/Pie.js'
 window.onload = function () {
   
     
@@ -75,27 +77,19 @@ window.onload = function () {
     };
     pieChart(pieObj3);
     
-    let test = new PieData('testPie')
-    pieChart(test)
-   // console.log(test)
-    test.width = 800
-    //console.log(test)
-    //pieChart(test)
+    let anotherTest = new Pie('myPie', data0)
+    console.log(`anotherTest: ${JSON.stringify(anotherTest)}`);
+    anotherTest.background.fill = 'orange'
+    console.log(anotherTest)
+    console.log(anotherTest.total)
+    console.log(anotherTest.data)
     
-    const testProxy = new Proxy(test, {
-        get(target, key) {
-            return target[ key ] ?? target.getItem(key) ?? undefined;
-        },
-        set(target, key, value) {
-            if (key in target) {
-                return false;
-            }
-            return yourId3.setItem(key, value);
-        },
-    })
+    const defaultData = [ { text: 'A', value: 3 }, { text: 'B', value: 1 }, { value: 2 }, { value: 3 }, { value: 1 } ];
+    let values = defaultData.map(item => item.value);
+    console.log(values)
+    let sortedValues = values.sort((a, b) => a - b)
+    console.log(sortedValues)
     
-    test.x = '300px';
-   console.log(testProxy)
 };
 
 //TODO create an class with props to redraw on change (include title, , value, text per value);
