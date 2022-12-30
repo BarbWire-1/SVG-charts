@@ -84,17 +84,5 @@ window.onload = function () {
     console.log(anotherTest.total)
     console.log(anotherTest.data)
     
-    const defaultData = [ { text: 'A', value: 3 }, { text: 'B', value: 1 }, { value: 2 }, { value: 3 }, { value: 1 } ];
-    let values = defaultData.map(item => item.value);
-    console.log(values)
-    let sortedValues = values.sort((a, b) => a - b)
-    console.log(sortedValues)
-    
 };
 
-//TODO create an class with props to redraw on change (include title, , value, text per value);
-//TODO remove necessaty of parent-div! (for now manually add in html)
-// then add x,y,fill/shadow-filter to parent-svg (for each?, by class)
-// check CSS-possibilities for charts
-//TODO add ONE radius and then just scale by user-settings - more effective???
-// test and measure both approaches!

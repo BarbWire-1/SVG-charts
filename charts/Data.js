@@ -1,8 +1,3 @@
-/*
- *   Copyright (c) 2022 
- *   All rights reserved.
- */
-
 
 /*
  *   Copyright (c) 2022 
@@ -10,10 +5,6 @@
  */
 let defaultColors = [ '#4a4e4d', '#0e9aa7', '#3da4ab', '#f6cd61', '#fe8a71' ];
 const defaultData = [ {text: 'A', value: 3 }, {text: 'B', value: 1 }, { value: 2 }, { value: 3 }, { value: 1 } ];
-// console.log(defaultData.reduce((acc, obj) => {
-//     return acc + obj.value;
-// }, 0))
-
 
 export class Background {
     constructor (
@@ -51,19 +42,19 @@ export class Data {
    
 };
 
-export class Pie extends Data {
-    constructor (id, data) {
-        super(data)
-        this.background = new Background(id);
-        this.id = id + '_pie';
-        this.layout = super.layout;
-    }
- 
-    pie = {
-        x: 180,
-        y: 180,
-        r: 200,
-        strokeWidth: 150
-    }
-    
-}
+// export class Pie extends Data {
+//     constructor (id, data) {
+//         super(data)
+//         this.background = new Background(id);
+//         this.id = id + '_pie';
+//         this.layout = super.layout;
+//     }
+//  
+//     pie = {
+//         x: 180,
+//         y: 180,
+//         r: 200,
+//         strokeWidth: 150
+//     }
+//     
+// }
