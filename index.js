@@ -4,9 +4,9 @@
  *   MIT License
  */
 import { pieChart } from "./charts/pieChart.js"
-import { PieData } from "./charts/Pie.js";
 
-import {Pie} from './charts/Data.js'
+
+import {Pie} from './charts/Pie.js'
 window.onload = function () {
   
     
@@ -77,18 +77,18 @@ window.onload = function () {
     };
     pieChart(pieObj3);
     
-    let test = new PieData('testPie')
-    pieChart(test)
-   // console.log(test)
-    test.width = 800
-    //console.log(test)
-    //pieChart(test)
-    
-    let anotherTest = new Pie('myPie')
-    console.log(`test: ${JSON.stringify(anotherTest)}`);
+    let anotherTest = new Pie('myPie', data0)
+    console.log(`anotherTest: ${JSON.stringify(anotherTest)}`);
     anotherTest.background.fill = 'orange'
     console.log(anotherTest)
+    console.log(anotherTest.total)
+    console.log(anotherTest.data)
     
+    const defaultData = [ { text: 'A', value: 3 }, { text: 'B', value: 1 }, { value: 2 }, { value: 3 }, { value: 1 } ];
+    let values = defaultData.map(item => item.value);
+    console.log(values)
+    let sortedValues = values.sort((a, b) => a - b)
+    console.log(sortedValues)
     
 };
 

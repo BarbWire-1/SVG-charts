@@ -2,10 +2,20 @@
  *   Copyright (c) 2022 
  *   All rights reserved.
  */
-let defaultColors = [ '#4a4e4d', '#0e9aa7', '#3da4ab', '#f6cd61', '#fe8a71' ];
-let defaultData = [ { value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }, { value: 3 } ];
 
-class Background {
+
+/*
+ *   Copyright (c) 2022 
+ *   All rights reserved.
+ */
+let defaultColors = [ '#4a4e4d', '#0e9aa7', '#3da4ab', '#f6cd61', '#fe8a71' ];
+const defaultData = [ {text: 'A', value: 3 }, {text: 'B', value: 1 }, { value: 2 }, { value: 3 }, { value: 1 } ];
+// console.log(defaultData.reduce((acc, obj) => {
+//     return acc + obj.value;
+// }, 0))
+
+
+export class Background {
     constructor (
         id,
         x,
@@ -14,7 +24,7 @@ class Background {
         height,
         backgroundColor)
     {
-        this.id = id 
+        this.id = id +'_bg'
         this.style = {
             x: x || 0,
             y: y || 0,
@@ -28,36 +38,27 @@ class Background {
 };
 
 
-export class Data{
+// PREPARE DAT FOR SEVERAL USES
+export class Data {
+    constructor (arr) { 
+        this.data = arr || defaultData;
+        this.total = this.data.reduce((acc, obj) => {
+            return acc + obj.value;
+        }, 0);
+        this.values = this.data.map(item => item.value);
+        this.sortedValues = this.values.sort((a, b) => a - b);
+    };
    
-    constructor ( data, id) { 
-        this.layout = {
-            colors: defaultColors,
-            legend: 1,
-            percentage: 1,
-            color: 'white',
-            fontSize: 24
-        };
-        this.data = data;
-        this.id = id;
-        this.layout = {
-            colors: defaultColors,
-            legend: 1,
-            percentage: 1,
-            color: 'white',
-            fontSize: 24
-        };
-    }
-}
+};
 
 export class Pie extends Data {
-    constructor (id) {
-        super()
-        this.data = super.data;
+    constructor (id, data) {
+        super(data)
         this.background = new Background(id);
-        this.id = id;
+        this.id = id + '_pie';
         this.layout = super.layout;
     }
+ 
     pie = {
         x: 180,
         y: 180,
