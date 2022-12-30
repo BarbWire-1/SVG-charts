@@ -29,7 +29,7 @@ export class Background {
 };
 
 
-// PREPARE DAT FOR SEVERAL USES
+// PREPARE DATA FOR SEVERAL USES
 export class Data {
     constructor (arr) { 
         this.data = arr || defaultData;
