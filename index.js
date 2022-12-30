@@ -5,6 +5,8 @@
  */
 import { pieChart } from "./charts/pieChart.js"
 import { PieData } from "./charts/Pie.js";
+
+import {Pie} from './charts/Data.js'
 window.onload = function () {
   
     
@@ -82,20 +84,12 @@ window.onload = function () {
     //console.log(test)
     //pieChart(test)
     
-    const testProxy = new Proxy(test, {
-        get(target, key) {
-            return target[ key ] ?? target.getItem(key) ?? undefined;
-        },
-        set(target, key, value) {
-            if (key in target) {
-                return false;
-            }
-            return yourId3.setItem(key, value);
-        },
-    })
+    let anotherTest = new Pie('myPie')
+    console.log(`test: ${JSON.stringify(anotherTest)}`);
+    anotherTest.background.fill = 'orange'
+    console.log(anotherTest)
     
-    test.x = '300px';
-   console.log(testProxy)
+    
 };
 
 //TODO create an class with props to redraw on change (include title, , value, text per value);
