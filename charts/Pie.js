@@ -10,14 +10,24 @@
 */
 import { Data, Background } from "./Data.js";
 
-export class Pie extends Data {
+export class Pie extends Data{
+    
     constructor (id) {
-        super()
+       super()
+        this.data = new Data()
+        
         this.background = new Background(id);
         this.id = id + '_pie';
         this.layout = super.layout;
         this.values = super.sortedValues;
+        
+        //UNDEFINED DATA :(
+        // Object.defineProperty(this, 'data', {
+        //     set(newValue) { this.data = newValue }
+        // })  
+        
     }
+   
 
     pie = {
         x: 180,
@@ -25,6 +35,7 @@ export class Pie extends Data {
         r: 200,
         strokeWidth: 150
     }
+    
     
 //     slices = []
 //     this.data.forEach(slice => {

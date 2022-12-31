@@ -31,14 +31,24 @@ export class Background {
 
 // PREPARE DATA FOR SEVERAL USES
 export class Data {
-    constructor (arr) { 
+   
+    constructor (arr) {
+        // set input data to private
+        
+        // anotherTest.data[ 0 ].value = 1.11111
+        // this gets applied at instance, but not here at data
         this.data = arr || defaultData;
         this.values = this.data.map(item => item.value);
         this.total = this.values.reduce((a, b) => a + b);
         this.sortedValues = this.values.sort((a, b) => a - b);
         this.percent = this.values.map(val => Math.round(val * 100 / this.total))
+        
+       
+            
+       
     };
-   
+    
+    
 };
 
 // export class Pie extends Data {

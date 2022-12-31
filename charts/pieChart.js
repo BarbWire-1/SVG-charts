@@ -189,7 +189,7 @@ export function pieChart(obj) {
        
         let shownData = [ sortedValues[ sort ], s.percent, ]
         let slice = document.getElementById(`slice${pieCount}_${sliceCount}`);
-        console.log(slice)
+        // console.log(slice)
         
         // // CREATE on click???
        

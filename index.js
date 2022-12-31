@@ -77,12 +77,17 @@ window.onload = function () {
     };
     pieChart(pieObj3);
     
-    let anotherTest = new Pie('myPie', data0)
+    let anotherTest = new Pie('myPie', data1)
+    
     console.log(`anotherTest: ${JSON.stringify(anotherTest)}`);
     anotherTest.background.fill = 'orange'
     console.log(anotherTest)
     console.log(anotherTest.total)
-    console.log(anotherTest.data)
-    
+    console.log(`anotherTest.data: ${JSON.stringify(anotherTest.data)}`)
+   anotherTest.data.data[ 0 ].value = 1.11111
+    data1[ 0 ].value = 2000 // NOT applied to data!!!
+    //TODO changing data needs a recalc being manually triggered. WHY?????
+    // How can I access class DATA rewardly from extending class???
+    console.log(JSON.stringify(anotherTest))
 };
 
